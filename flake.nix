@@ -46,7 +46,7 @@
         devShells = {
           php = pkgs.mkShell {
             buildInputs = with pkgs; [
-              autoconf bison php re2c
+              autoconf binaryen bison php re2c wabt
             ];
             shellHook = ''
               export WASI_SDK_PATH="${self.packages.${system}.wasi-sdk}"
