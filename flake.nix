@@ -17,7 +17,7 @@
           in pkgs.stdenv.mkDerivation {
             inherit pname version;
 
-            sourceRoot = "wasi-sdk-${version}.0";
+            sourceRoot = "${pname}-${version}.0";
             dontBuild = true;
             dontConfigure = true;
             dontStrip = true;
