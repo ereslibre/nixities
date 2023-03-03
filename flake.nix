@@ -37,6 +37,10 @@
               url = "https://github.com/WebAssembly/${pname}/releases/download/${pname}-${version}/${pname}-${version}.0-linux.tar.gz";
               hash = "sha256-2QCryCbuwZVbmv0lDnzCSWM4q79sRA2GoxPAbkIIP6E=";
             };
+
+            meta = {
+              platforms = [ "x86_64-linux" ];
+            };
           };
         };
         devShells = {
