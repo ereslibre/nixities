@@ -93,7 +93,7 @@
                      --offline \
                      --show-diff \
                      --show-slow 1000 \
-                     --set-timeout 120
+                     --set-timeout 120 2>&1 | tee test-results.txt
               }
           '';
           };
