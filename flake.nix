@@ -52,7 +52,7 @@
               export WASI_SDK_PATH="${self.packages.${system}.wasi-sdk}"
               export PATH=$PATH:$WASI_SDK_PATH/bin
               export CC="$WASI_SDK_PATH/bin/clang --sysroot=$WASI_SDK_PATH/share/wasi-sysroot"
-              export CFLAGS="-D_WASI_EMULATED_GETPID -D_WASI_EMULATED_SIGNAL -D_WASI_EMULATED_PROCESS_CLOCKS"
+              export CFLAGS="-O2 -D_WASI_EMULATED_GETPID -D_WASI_EMULATED_SIGNAL -D_WASI_EMULATED_PROCESS_CLOCKS"
               export LDFLAGS="-lwasi-emulated-getpid -lwasi-emulated-signal -lwasi-emulated-process-clocks"
               export SKIP_IO_CAPTURE_TESTS=1
               export TEST_PHP_JUNIT=junit.out.xml
