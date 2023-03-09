@@ -57,20 +57,20 @@
               export SKIP_IO_CAPTURE_TESTS=1
               export TEST_PHP_JUNIT=junit.out.xml
               export STACK_LIMIT_DEFAULTS_CHECK=1
-              export TEST_PHP_EXECUTABLE=$PWD/wasmtime-run-cli.sh
-              export TEST_PHP_CGI_EXECUTABLE=$PWD/wasmtime-run-cgi.sh
+              export TEST_PHP_EXECUTABLE=/tmp/wasmtime-run-cli.sh
+              export TEST_PHP_CGI_EXECUTABLE=/tmp/wasmtime-run-cgi.sh
               export TEST_PHPDBG_EXECUTABLE=""
 
-              cat <<-'EOF' > wasmtime-run-cli.sh
+              cat <<-'EOF' > /tmp/wasmtime-run-cli.sh
               	#!/usr/bin/env bash
               	WASMTIME_BACKTRACE_DETAILS=1 wasmtime run --allow-unknown-exports --mapdir /::/ sapi/cli/php -- "$@"
               EOF
-              chmod +x wasmtime-run-cli.sh
-              cat <<-'EOF' > wasmtime-run-cgi.sh
+              chmod +x /tmp/wasmtime-run-cli.sh
+              cat <<-'EOF' > /tmp/wasmtime-run-cgi.sh
               	#!/usr/bin/env bash
               	WASMTIME_BACKTRACE_DETAILS=1 wasmtime run --allow-unknown-exports --mapdir /::/ sapi/cgi/php-cgi -- "$@"
               EOF
-              chmod +x wasmtime-run-cgi.sh
+              chmod +x /tmp/wasmtime-run-cgi.sh
 
               configure() {
                  ./buildconf --force; ./configure --host=wasm32-wasi host_alias=wasm32-musl-wasi --target=wasm32-wasi target_alias=wasm32-musl-wasi --without-iconv --without-openssl --without-libxml --without-pear --disable-phar --disable-opcache --disable-zend-signals --without-pcre-jit --disable-pdo --disable-fiber-asm --disable-posix --without-sqlite3 --disable-dom --disable-xml --disable-simplexml --without-libxml --disable-xmlreader --disable-xmlwriter
