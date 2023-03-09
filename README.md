@@ -13,13 +13,7 @@ trivial to reproduce in different systems.
     develop` command inside of it, and run the following:
 
     ```shell-session
-    $ ./buildconf --force
-    $ ./configure --host=wasm32-wasi host_alias=wasm32-musl-wasi
-        --target=wasm32-wasi target_alias=wasm32-musl-wasi --without-iconv
-        --without-openssl --without-libxml --without-pear --disable-phar
-        --disable-opcache --disable-zend-signals --without-pcre-jit
-        --disable-pdo --disable-fiber-asm --disable-posix
-        --without-sqlite3 --disable-dom --disable-xml --disable-simplexml
-        --without-libxml --disable-xmlreader --disable-xmlwriter
-    $ make -j cgi cli
+    $ configure
+    $ build
+    $ runtests
     ```
