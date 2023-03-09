@@ -63,12 +63,12 @@
 
               cat <<-'EOF' > wasmtime-run-cli.sh
               	#!/usr/bin/env bash
-              	WASMTIME_BACKTRACE_DETAILS=1 wasmtime run --allow-unknown-exports --mapdir /::/ sapi/cli/php.optimized -- "$@"
+              	WASMTIME_BACKTRACE_DETAILS=1 wasmtime run --allow-unknown-exports --mapdir /::/ sapi/cli/php -- "$@"
               EOF
               chmod +x wasmtime-run-cli.sh
               cat <<-'EOF' > wasmtime-run-cgi.sh
               	#!/usr/bin/env bash
-              	WASMTIME_BACKTRACE_DETAILS=1 wasmtime run --allow-unknown-exports --mapdir /::/ sapi/cgi/php-cgi.optimized -- "$@"
+              	WASMTIME_BACKTRACE_DETAILS=1 wasmtime run --allow-unknown-exports --mapdir /::/ sapi/cgi/php-cgi -- "$@"
               EOF
               chmod +x wasmtime-run-cgi.sh
 
