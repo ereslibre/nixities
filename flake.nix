@@ -43,7 +43,13 @@
             };
           };
         };
-        devShells = {
+        devShells = let
+          wasmTools = with pkgs; [ binaryen wabt ];
+          devTools = with pkgs; [ lldb ];
+        in {
+          wasi-sdk = pkgs.mkShell {
+            buildInputs = wasmTools ++ devTools ++ [ self.packages.${system}.wasi-sdk ];
+          };
           php = pkgs.mkShell {
             buildInputs = with pkgs; [
               autoconf binaryen bison coreutils php re2c wabt wasmtime
