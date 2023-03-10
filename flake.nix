@@ -8,8 +8,8 @@
 
   outputs = { self, flake-utils, nixpkgs }:
     flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system}; in
-      {
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in {
         packages = {
           wasi-sdk = let
             pname = "wasi-sdk";
@@ -22,9 +22,7 @@
             dontConfigure = true;
             dontStrip = true;
 
-            nativeBuildInputs = with pkgs; [
-              autoPatchelfHook
-            ];
+            nativeBuildInputs = with pkgs; [ autoPatchelfHook ];
 
             installPhase = ''
               mkdir -p $out/{bin,lib,share}
@@ -34,26 +32,32 @@
             '';
 
             src = pkgs.fetchurl {
-              url = "https://github.com/WebAssembly/${pname}/releases/download/${pname}-${version}/${pname}-${version}.0-linux.tar.gz";
+              url =
+                "https://github.com/WebAssembly/${pname}/releases/download/${pname}-${version}/${pname}-${version}.0-linux.tar.gz";
               hash = "sha256-2QCryCbuwZVbmv0lDnzCSWM4q79sRA2GoxPAbkIIP6E=";
             };
 
-            meta = {
-              platforms = [ "x86_64-linux" ];
-            };
+            meta = { platforms = [ "x86_64-linux" ]; };
           };
         };
         devShells = let
           wasmTools = with pkgs; [ binaryen wabt ];
           devTools = with pkgs; [ lldb ];
+          allGenericTools = wasmTools ++ devTools
+            ++ [ self.packages.${system}.wasi-sdk ];
         in {
-          wasi-sdk = pkgs.mkShell {
-            buildInputs = wasmTools ++ devTools ++ [ self.packages.${system}.wasi-sdk ];
-          };
+          wasi-sdk = pkgs.mkShell { buildInputs = allGenericTools; };
           php = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              autoconf binaryen bison coreutils php re2c wabt wasmtime
-            ];
+            buildInputs = allGenericTools ++ (with pkgs; [
+              autoconf
+              binaryen
+              bison
+              coreutils
+              php
+              re2c
+              wabt
+              wasmtime
+            ]);
             shellHook = ''
               export WASI_SDK_PATH="${self.packages.${system}.wasi-sdk}"
               export PATH=$PATH:$WASI_SDK_PATH/bin
@@ -101,9 +105,8 @@
                      --show-slow 1000 \
                      --set-timeout 120 2>&1 | tee test-results.txt
               }
-          '';
+            '';
           };
         };
-      }
-    );
+      });
 }
