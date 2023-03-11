@@ -8,7 +8,13 @@
 
   outputs = { self, flake-utils, nixpkgs }:
     flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+        wasmRuntimes = with pkgs; [ wasmtime ];
+        wasmGenericTools = with pkgs; [ binaryen wabt ];
+        devGenericTools = with pkgs; [ lldb ];
+        allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools
+                       ++ [ self.packages.${system}.wasi-sdk ];
       in {
         packages = {
           wasi-sdk = let
@@ -40,23 +46,15 @@
             meta = { platforms = [ "x86_64-linux" ]; };
           };
         };
-        devShells = let
-          wasmTools = with pkgs; [ binaryen wabt ];
-          devTools = with pkgs; [ lldb ];
-          allGenericTools = wasmTools ++ devTools
-            ++ [ self.packages.${system}.wasi-sdk ];
-        in {
-          wasi-sdk = pkgs.mkShell { buildInputs = allGenericTools; };
+        devShells = {
+          wasi-sdk = pkgs.mkShell { buildInputs = allWasmTools; };
           php = pkgs.mkShell {
-            buildInputs = allGenericTools ++ (with pkgs; [
+            buildInputs = allWasmTools ++ (with pkgs; [
               autoconf
-              binaryen
               bison
               coreutils
               php
               re2c
-              wabt
-              wasmtime
             ]);
             shellHook = ''
               export WASI_SDK_PATH="${self.packages.${system}.wasi-sdk}"
