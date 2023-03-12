@@ -1,4 +1,4 @@
-{ pkgs, system, allWasmTools, wasi-sdk }:
+{ pkgs, allWasmTools, wasi-sdk }:
 pkgs.mkShell {
   buildInputs = allWasmTools
     ++ (with pkgs; [ autoconf bison coreutils php re2c ]);
