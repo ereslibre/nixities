@@ -14,7 +14,7 @@
         wasmGenericTools = with pkgs; [ binaryen wabt ];
         devGenericTools = with pkgs; [ lldb ];
         allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools
-          ++ [ self.packages.${system}.wasi-sdk ];
+          ++ (with self.packages.${system}; [ wasi-sdk ]);
       in {
         packages = { wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { }; };
         devShells = {
