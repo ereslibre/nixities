@@ -14,7 +14,7 @@
         wasmGenericTools = with pkgs; [ binaryen wabt ];
         devGenericTools = with pkgs; [ lldb ];
         allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools
-                       ++ [ self.packages.${system}.wasi-sdk ];
+          ++ [ self.packages.${system}.wasi-sdk ];
       in {
         packages = {
           wasi-sdk = let
@@ -47,15 +47,10 @@
           };
         };
         devShells = {
-          wasi-sdk = pkgs.mkShell { buildInputs = allWasmTools; };
+          nix = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
           php = pkgs.mkShell {
-            buildInputs = allWasmTools ++ (with pkgs; [
-              autoconf
-              bison
-              coreutils
-              php
-              re2c
-            ]);
+            buildInputs = allWasmTools
+              ++ (with pkgs; [ autoconf bison coreutils php re2c ]);
             shellHook = ''
               export WASI_SDK_PATH="${self.packages.${system}.wasi-sdk}"
               export PATH=$PATH:$WASI_SDK_PATH/bin
@@ -105,6 +100,7 @@
               }
             '';
           };
+          wasi-sdk = pkgs.mkShell { buildInputs = allWasmTools; };
         };
       });
 }
