@@ -19,7 +19,7 @@
         packages = { wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { }; };
         devShells = {
           nix = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
-          php = pkgs.callPackage ./shells/wasi-sdk {
+          php = pkgs.callPackage ./shells/php {
             inherit (self.packages.${system}) wasi-sdk;
             inherit allWasmTools;
           };
