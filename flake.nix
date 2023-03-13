@@ -22,9 +22,14 @@
             inherit allWasmTools;
             inherit (self.packages.${system}) wasi-sdk;
           };
-          wasi-sdk = pkgs.mkShell {
+          wasi-sdk = pkgs.mkShell.override { inherit (pkgs.pkgsLLVM) stdenv; } {
             buildInputs = [ allWasmTools ]
               ++ (with self.packages.${system}; [ wasi-sdk ]);
+            shellHook = let llvm = pkgs.llvmPackages_latest.llvm;
+            in ''
+              export AR=${llvm}/bin/llvm-ar
+              export NM=${llvm}/bin/llvm-nm
+            '';
           };
         };
       });
