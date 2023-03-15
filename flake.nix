@@ -18,7 +18,7 @@
         packages = { wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { }; };
         devShells = {
           clang = pkgs.mkShell {
-            buildInputs = (with pkgs; [ autoconf clang cmake ])
+            buildInputs = (with pkgs; [ autoconf automake clang cmake ])
               ++ devGenericTools;
           };
           nix = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
