@@ -17,6 +17,9 @@
       in {
         packages = { wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { }; };
         devShells = {
+          clang = pkgs.mkShell {
+            buildInputs = (with pkgs; [ clang ]) ++ devGenericTools;
+          };
           nix = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
           php = pkgs.callPackage ./shells/php {
             inherit allWasmTools;
@@ -31,6 +34,8 @@
                 export NM=${llvm}/bin/llvm-nm
               '';
             };
+          wasm =
+            pkgs.mkShell { buildInputs = allWasmTools ++ devGenericTools; };
         };
       });
 }
