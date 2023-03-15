@@ -18,7 +18,8 @@
         packages = { wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { }; };
         devShells = {
           clang = pkgs.mkShell {
-            buildInputs = (with pkgs; [ clang ]) ++ devGenericTools;
+            buildInputs = (with pkgs; [ autoconf clang cmake ])
+              ++ devGenericTools;
           };
           nix = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
           php = pkgs.callPackage ./shells/php {
@@ -27,7 +28,7 @@
           };
           wasi-libc =
             pkgs.mkShell.override { inherit (pkgs.pkgsLLVM) stdenv; } {
-              buildInputs = [ allWasmTools ];
+              nativeBuildInputs = allWasmTools;
               shellHook = let llvm = pkgs.llvmPackages_latest.llvm;
               in ''
                 export AR=${llvm}/bin/llvm-ar
