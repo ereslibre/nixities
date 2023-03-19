@@ -15,7 +15,14 @@
         devGenericTools = with pkgs; [ lldb ];
         allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
       in {
-        packages = { wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { }; };
+        packages = {
+          wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { };
+        } // {
+          # Re-export the whole legacyPackages expression for this
+          # system. This enables for cached ephemeral environments
+          # thanks to the `nixities` flake lock
+          nixpkgs = pkgs;
+        };
         devShells = {
           clang = pkgs.mkShell {
             buildInputs = (with pkgs; [ autoconf automake clang cmake ])
