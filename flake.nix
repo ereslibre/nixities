@@ -24,6 +24,8 @@
           nixpkgs = pkgs;
         };
         devShells = {
+          default =
+            pkgs.mkShell { buildInputs = with pkgs; [ nix-linter nixfmt ]; };
           clang = pkgs.mkShell {
             buildInputs = (with pkgs; [ autoconf automake clang cmake ])
               ++ devGenericTools;
