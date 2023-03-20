@@ -30,11 +30,11 @@
         devShells = {
           temporary.wasmio = {
             wws = pkgs.mkShell { buildInputs = with pkgs; [ go nodejs ]; };
-            wlr = pkgs.mkShell {
+            wlr = pkgs.mkShell rec {
               PKG_CONFIG_SYSROOT_DIR =
-                "../libs/libbundle_wlr-0.1.0-wasi-sdk-19.0";
+                "/home/ereslibre/wasmio-demo/wlr/libs/libbundle_wlr-0.1.0-wasi-sdk-19.0";
               PKG_CONFIG_PATH =
-                "../libs/libbundle_wlr-0.1.0-wasi-sdk-19.0/lib/wasm32-wasi/pkgconfig/";
+                "${PKG_CONFIG_SYSROOT_DIR}/lib/wasm32-wasi/pkgconfig/";
               nativeBuildInputs = with pkgs; [
                 pkg-config
                 self.packages.${system}.wasi-sdk
