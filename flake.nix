@@ -25,9 +25,9 @@
         };
         devShells = {
           temporary.wasmio = {
-            wws = pkgs.mkShell { buildInputs = with pkgs; [ go ]; };
+            wws = pkgs.mkShell { buildInputs = with pkgs; [ go nodejs ]; };
             wlr = pkgs.mkShell {
-              buildInputs = with pkgs; [ pkg-config wasmtime ];
+              buildInputs = with pkgs; [ go pkg-config wasmtime ];
             };
           };
           default = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
