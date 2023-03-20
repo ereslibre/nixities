@@ -27,7 +27,10 @@
           temporary.wasmio = {
             wws = pkgs.mkShell { buildInputs = with pkgs; [ go nodejs ]; };
             wlr = pkgs.mkShell {
-              buildInputs = with pkgs; [ go pkg-config wasmtime ];
+              PKG_CONFIG_SYSROOT_DIR = "../libs/libbundle_wlr-0.1.0-wasi-sdk-19.0";
+              PKG_CONFIG_PATH = "../libs/libbundle_wlr-0.1.0-wasi-sdk-19.0/lib/wasm32-wasi/pkgconfig/";
+              nativeBuildInputs = with pkgs; [ pkg-config self.packages.${system}.wasi-sdk ];
+              buildInputs = with pkgs; [ allWasmTools go ];
             };
           };
           default = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
