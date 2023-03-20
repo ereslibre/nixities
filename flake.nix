@@ -16,6 +16,7 @@
         allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
       in {
         packages = {
+          temporary.wasmio = { spin = pkgs.callPackage ./packages/spin { }; };
           wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { };
         } // {
           # Re-export the whole legacyPackages expression for this
@@ -27,10 +28,17 @@
           temporary.wasmio = {
             wws = pkgs.mkShell { buildInputs = with pkgs; [ go nodejs ]; };
             wlr = pkgs.mkShell {
-              PKG_CONFIG_SYSROOT_DIR = "../libs/libbundle_wlr-0.1.0-wasi-sdk-19.0";
-              PKG_CONFIG_PATH = "../libs/libbundle_wlr-0.1.0-wasi-sdk-19.0/lib/wasm32-wasi/pkgconfig/";
-              nativeBuildInputs = with pkgs; [ pkg-config self.packages.${system}.wasi-sdk ];
-              buildInputs = with pkgs; [ allWasmTools go ];
+              PKG_CONFIG_SYSROOT_DIR =
+                "../libs/libbundle_wlr-0.1.0-wasi-sdk-19.0";
+              PKG_CONFIG_PATH =
+                "../libs/libbundle_wlr-0.1.0-wasi-sdk-19.0/lib/wasm32-wasi/pkgconfig/";
+              nativeBuildInputs = with pkgs; [
+                pkg-config
+                self.packages.${system}.wasi-sdk
+              ];
+              buildInputs = with pkgs;
+                [ allWasmTools go pkg-config wasmtime ]
+                ++ (with self.packages.${system}.temporary.wasmio; [ spin ]);
             };
           };
           default = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
