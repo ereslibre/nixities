@@ -24,8 +24,12 @@
           nixpkgs = pkgs;
         };
         devShells = {
-          temporary.wasmio =
-            pkgs.mkShell { buildInputs = with pkgs; [ pkg-config wasmtime ]; };
+          temporary.wasmio = {
+            wws = pkgs.mkShell { buildInputs = with pkgs; [ go ]; };
+            wlr = pkgs.mkShell {
+              buildInputs = with pkgs; [ pkg-config wasmtime ];
+            };
+          };
           default = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
           clang = pkgs.mkShell {
             buildInputs = (with pkgs; [ autoconf automake clang cmake ])
