@@ -16,7 +16,10 @@
         allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
       in {
         packages = {
-          temporary.wasmio = { spin = pkgs.callPackage ./packages/spin { }; };
+          temporary.wasmio = {
+            spin = pkgs.callPackage ./packages/spin { };
+            wws = pkgs.callPackage ./packages/wws { };
+          };
           wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { };
         } // {
           # Re-export the whole legacyPackages expression for this
@@ -38,7 +41,10 @@
               ];
               buildInputs = with pkgs;
                 [ allWasmTools go pkg-config wasmtime ]
-                ++ (with self.packages.${system}.temporary.wasmio; [ spin ]);
+                ++ (with self.packages.${system}.temporary.wasmio; [
+                  spin
+                  wws
+                ]);
             };
           };
           default = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
