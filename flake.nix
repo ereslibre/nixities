@@ -29,7 +29,8 @@
         };
         devShells = {
           temporary.wasmio = {
-            wws = pkgs.mkShell { buildInputs = with pkgs; [ go nodejs ]; };
+            wws =
+              pkgs.mkShell { buildInputs = with pkgs; [ go nodejs tmate ]; };
             wlr = pkgs.mkShell rec {
               PKG_CONFIG_SYSROOT_DIR =
                 "/home/ereslibre/wasmio-demo/wlr-demo/libs/libbundle_wlr-0.1.0-wasi-sdk-19.0";
