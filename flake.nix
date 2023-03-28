@@ -43,6 +43,15 @@
                 export NM=${llvm}/bin/llvm-nm
               '';
             };
+          wasi-vfs = pkgs.mkShell
+            (let wasi-sdk = self.packages.${system}.wasi-sdk;
+             in {
+               buildInputs = with pkgs; [ llvmPackages_latest.clang ];
+              nativeBuildInputs = allWasmTools;
+              shellHook = ''
+                export WASI_SDK_PATH=${wasi-sdk}
+              '';
+            });
           wasm =
             pkgs.mkShell { buildInputs = allWasmTools ++ devGenericTools; };
         };
