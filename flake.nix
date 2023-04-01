@@ -50,6 +50,7 @@
               nativeBuildInputs = allWasmTools;
               shellHook = ''
                 export WASI_SDK_PATH=${wasi-sdk}
+                export CC=${wasi-sdk}/bin/clang
               '';
             });
           wasm =
