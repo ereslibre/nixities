@@ -8,12 +8,7 @@
 
   outputs = { self, flake-utils, nixpkgs }:
     flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-        wasmRuntimes = with pkgs; [ wasmtime ];
-        wasmGenericTools = with pkgs; [ binaryen wabt ];
-        devGenericTools = with pkgs; [ lldb ];
-        allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
+      let pkgs = nixpkgs.legacyPackages.${system};
       in {
         packages = {
           wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { };
@@ -23,38 +18,28 @@
           # thanks to the `nixities` flake lock
           nixpkgs = pkgs;
         };
-        devShells = {
-          default = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
-          clang = pkgs.mkShell {
-            buildInputs = (with pkgs; [ autoconf automake clang cmake ])
-              ++ devGenericTools;
-          };
+        devShells = let
+          wasmRuntimes = with pkgs; [ wasmtime ];
+          wasmGenericTools = with pkgs; [ binaryen wabt ];
+          devGenericTools = with pkgs; [ lldb ];
+          allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
+        in {
+          clang = pkgs.callPackage ./shells/clang { inherit devGenericTools; };
+          default = self.devShells.${system}.nix;
           nix = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
           php = pkgs.callPackage ./shells/php {
             inherit allWasmTools;
             inherit (self.packages.${system}) wasi-sdk;
           };
           wasi-libc =
-            pkgs.mkShell.override { inherit (pkgs.pkgsLLVM) stdenv; } {
-              nativeBuildInputs = allWasmTools;
-              shellHook = let llvm = pkgs.llvmPackages_latest.llvm;
-              in ''
-                export AR=${llvm}/bin/llvm-ar
-                export NM=${llvm}/bin/llvm-nm
-              '';
-            };
-          wasi-vfs = pkgs.mkShell
-            (let wasi-sdk = self.packages.${system}.wasi-sdk;
-             in {
-               buildInputs = with pkgs; [ llvmPackages_latest.clang ];
-              nativeBuildInputs = allWasmTools;
-              shellHook = ''
-                export WASI_SDK_PATH=${wasi-sdk}
-                export CC="${wasi-sdk}/bin/clang --sysroot=${wasi-sdk}/share/wasi-sysroot"
-              '';
-            });
-          wasm =
-            pkgs.mkShell { buildInputs = allWasmTools ++ devGenericTools; };
+            pkgs.callPackage ./shells/wasi-libc { inherit allWasmTools; };
+          wasi-vfs = pkgs.callPackage ./shells/wasi-vfs {
+            inherit allWasmTools;
+            inherit (self.packages.${system}) wasi-sdk;
+          };
+          wasm = pkgs.callPackage ./shells/wasm {
+            inherit allWasmTools devGenericTools;
+          };
         };
       });
 }
