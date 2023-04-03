@@ -41,9 +41,7 @@
             inherit allWasmTools;
             inherit (self.packages.${system}) wasi-sdk;
           };
-          wasm = pkgs.callPackage ./shells/wasm {
-            inherit allWasmTools devGenericTools;
-          };
+          wasm = pkgs.callPackage ./shells/wasm { inherit allWasmTools; };
         };
       });
 }

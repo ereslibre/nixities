@@ -1,2 +1,1 @@
-{ mkShell, allWasmTools, devGenericTools }:
-mkShell { buildInputs = allWasmTools ++ devGenericTools; }
+{ mkShell, allWasmTools }: mkShell { buildInputs = allWasmTools; }
