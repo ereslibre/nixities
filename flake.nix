@@ -33,6 +33,10 @@
           };
           wasi-libc =
             pkgs.callPackage ./shells/wasi-libc { inherit allWasmTools; };
+          wasi-sdk = pkgs.callPackage ./shells/wasi-sdk {
+            inherit allWasmTools;
+            inherit (self.packages.${system}) wasi-sdk;
+          };
           wasi-vfs = pkgs.callPackage ./shells/wasi-vfs {
             inherit allWasmTools;
             inherit (self.packages.${system}) wasi-sdk;
