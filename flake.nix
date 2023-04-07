@@ -27,7 +27,7 @@
           clang = pkgs.callPackage ./shells/clang { inherit devGenericTools; };
           default = self.devShells.${system}.nix;
           nix = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
-          php = pkgs.callPackage ./shells/php {
+          php.wasi = pkgs.callPackage ./shells/php-wasi {
             inherit allWasmTools;
             inherit (self.packages.${system}) wasi-sdk;
           };
