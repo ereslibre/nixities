@@ -49,9 +49,9 @@
             path = ./devenv/templates/nixity;
             description = "A flake using the nixities project for devenv";
             welcomeText = ''
-              # `.devenv` should be added to `.gitignore`
+              # Update inputs
               ```sh
-                echo .devenv >> .gitignore
+                devenv update
               ```
             '';
           };

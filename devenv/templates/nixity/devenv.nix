@@ -1,8 +1,9 @@
-{ nixities }:
+{ pkgs, nixities, ... }:
 
-{
-  packages = with nixities.legacyPackages.${pkgs.stdenv.system};
-    [ cowsay ] ++ (with nixities.packages.${pkgs.stdenv.system}; [ wasi-sdk ]);
+let inherit (pkgs.stdenv) system;
+in {
+  packages = with nixities.packages.${system}.nixpkgs;
+    [ cowsay ] ++ (with nixities.packages.${system}; [ wasi-sdk ]);
 
   enterShell = ''
     cowsay 'Welcome!'
