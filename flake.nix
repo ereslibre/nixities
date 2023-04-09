@@ -43,5 +43,17 @@
           };
           wasm = pkgs.callPackage ./shells/wasm { inherit allWasmTools; };
         };
+        templates = {
+          nixity = {
+            path = ./devenv/templates/nixity;
+            description = "A flake using the nixities project for devenv";
+            welcomeText = ''
+              # `.devenv` should be added to `.gitignore`
+              ```sh
+                echo .devenv >> .gitignore
+              ```
+            '';
+          };
+        };
       });
 }
