@@ -20,7 +20,7 @@
         };
         devShells = let
           wasmRuntimes = with pkgs; [ wasmtime ];
-          wasmGenericTools = with pkgs; [ binaryen wabt ];
+          wasmGenericTools = with pkgs; [ binaryen wabt wasm-tools ];
           devGenericTools = with pkgs; [ lldb ];
           allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
         in {
