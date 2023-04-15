@@ -10,9 +10,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
       in {
-        packages = {
-          wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { };
-        };
+        packages = { wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { }; };
         legacyPackages = pkgs;
         devShells = let
           wasmRuntimes = with pkgs; [ wasmtime ];
