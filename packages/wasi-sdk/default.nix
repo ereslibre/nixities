@@ -11,7 +11,8 @@ in pkgs.stdenv.mkDerivation {
   dontStrip = true;
 
   nativeBuildInputs =
-    lib.optional stdenv.isLinux (with pkgs; [ autoPatchelfHook ]);
+    lib.optional stdenv.isLinux (with pkgs; [ autoPatchelfHook pkg-config ]);
+  buildInputs = lib.optional stdenv.isLinux (with pkgs; [ gcc-unwrapped ]);
 
   installPhase = ''
     mkdir -p $out/{bin,lib,share}
