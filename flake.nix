@@ -12,12 +12,8 @@
       in {
         packages = {
           wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { };
-        } // {
-          # Re-export the whole legacyPackages expression for this
-          # system. This enables for cached ephemeral environments
-          # thanks to the `nixities` flake lock
-          nixpkgs = pkgs;
         };
+        legacyPackages = pkgs;
         devShells = let
           wasmRuntimes = with pkgs; [ wasmtime ];
           wasmGenericTools = with pkgs; [ binaryen wabt wasm-tools ];
@@ -44,6 +40,7 @@
           wasm = pkgs.callPackage ./shells/wasm { inherit allWasmTools; };
         };
       }) // {
+        inherit nixpkgs;
         templates = rec {
           nixity = {
             path = ./devenv/templates/nixity;

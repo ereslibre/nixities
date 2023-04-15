@@ -1,5 +1,0 @@
-inputs:
-  nixities:
-    url: github:ereslibre/nixities
-  nixpkgs:
-    url: github:NixOS/nixpkgs/nixpkgs-unstable
