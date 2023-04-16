@@ -43,12 +43,6 @@
           nixity = {
             path = ./devenv/templates/nixity;
             description = "A flake using the nixities project for devenv";
-            welcomeText = ''
-              # Update inputs
-              ```sh
-                devenv update
-              ```
-            '';
           };
           default = nixity;
         };
