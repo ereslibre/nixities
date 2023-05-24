@@ -37,7 +37,9 @@
           };
           wasm = pkgs.callPackage ./shells/wasm { inherit allWasmTools; };
           work = {
-            wws = pkgs.callPackage ./shells/work/wws { inherit (pkgs) pkg-config clang openssl; };
+            wws = pkgs.callPackage ./shells/work/wws {
+              inherit (pkgs) pkg-config clang openssl;
+            };
           };
         };
       }) // {
