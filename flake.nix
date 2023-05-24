@@ -13,7 +13,7 @@
         packages = { wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { }; };
         legacyPackages = pkgs;
         devShells = let
-          wasmRuntimes = with pkgs; [ wasmtime ];
+          wasmRuntimes = with pkgs; [ wasmer wasmtime wavm ];
           wasmGenericTools = with pkgs; [ binaryen wabt wasm-tools ];
           devGenericTools = with pkgs; [ lldb ];
           allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
