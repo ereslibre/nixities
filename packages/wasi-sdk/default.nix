@@ -1,7 +1,7 @@
 { lib, pkgs, stdenv }:
 let
   pname = "wasi-sdk";
-  version = "19";
+  version = "20";
 in pkgs.stdenv.mkDerivation {
   inherit pname version;
 
@@ -25,10 +25,10 @@ in pkgs.stdenv.mkDerivation {
     mapSystem = system:
       if system == "x86_64-linux" then {
         tarballSuffix = "linux";
-        hash = "sha256-2QCryCbuwZVbmv0lDnzCSWM4q79sRA2GoxPAbkIIP6E=";
+        hash = "sha256-cDATnUlaGfvsy5RJFQwrFTHhXY+3RBmHKnGadYCq0Pk=";
       } else {
         tarballSuffix = "macos";
-        hash = "sha256-LCkIDzMNIukPNjF8oFWt+LBUKsgkcO/dRUx0Fv+gpDA=";
+        hash = "sha256-j+okNPBQYuo22WBHi6hrmhcMxxheB2W/tJ0kuymjlGY=";
       };
   in (if builtins.elem stdenv.hostPlatform.system [
     "x86_64-linux"
