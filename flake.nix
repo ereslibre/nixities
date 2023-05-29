@@ -10,7 +10,10 @@
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
       in {
-        packages = { wasi-sdk = pkgs.callPackage ./packages/wasi-sdk { }; };
+        packages = {
+          wasi-sdk-19 = pkgs.callPackage ./packages/wasi-sdk-19 { };
+          wasi-sdk-20 = pkgs.callPackage ./packages/wasi-sdk-20 { };
+        };
         legacyPackages = pkgs;
         devShells = let
           wasmRuntimes = with pkgs; [ wasmer wasmtime wavm ];
@@ -21,9 +24,13 @@
           clang = pkgs.callPackage ./shells/clang { inherit devGenericTools; };
           default = self.devShells.${system}.nix;
           nix = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
-          php.wasi = pkgs.callPackage ./shells/php-wasi {
+          php.wasi-sdk-19 = pkgs.callPackage ./shells/php-wasi-sdk-19 {
             inherit allWasmTools;
-            inherit (self.packages.${system}) wasi-sdk;
+            inherit (self.packages.${system}) wasi-sdk-19;
+          };
+          php.wasi-sdk-20 = pkgs.callPackage ./shells/php-wasi-sdk-20 {
+            inherit allWasmTools;
+            inherit (self.packages.${system}) wasi-sdk-20;
           };
           wasi-libc =
             pkgs.callPackage ./shells/wasi-libc { inherit allWasmTools; };
