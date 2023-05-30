@@ -29,6 +29,10 @@ mkShell {
        ./buildconf --force; ./configure --host=wasm32-wasi host_alias=wasm32-musl-wasi --target=wasm32-wasi target_alias=wasm32-musl-wasi --without-iconv --without-openssl --without-libxml --without-pear --disable-phar --disable-opcache --disable-zend-signals --without-pcre-jit --disable-pdo --disable-fiber-asm --disable-posix --without-sqlite3 --disable-dom --disable-xml --disable-simplexml --without-libxml --disable-xmlreader --disable-xmlwriter --disable-fileinfo --disable-session
     }
 
+    configure-minimal() {
+       ./buildconf --force; ./configure --host=wasm32-wasi host_alias=wasm32-musl-wasi --target=wasm32-wasi target_alias=wasm32-musl-wasi --without-openssl --without-libxml --without-pear --disable-phar --disable-opcache --disable-zend-signals --without-pcre-jit --disable-fiber-asm --disable-posix --disable-dom --disable-xml --disable-simplexml --without-libxml --disable-xmlreader --disable-xmlwriter --disable-fileinfo --disable-session --disable-all --disable-dom --disable-inifile --disable-flatfile --disable-ctype --disable-dom --disable-fileinfo --disable-filter --disable-mbregex --disable-opcache --disable-huge-code-pages --disable-opcache-jit --disable-phar --disable-posix --disable-session --disable-simplexml --disable-tokenizer --disable-xml --disable-xmlreader --disable-xmlwriter --disable-mysqlnd-compression-support --disable-fiber-asm --disable-zend-signals --without-cdb --without-sqlite3 --disable-pdo
+    }
+
     genstubs() {
       find . -name '*_arginfo.h' | xargs -I{} make {}
     }
