@@ -29,6 +29,10 @@ mkShell {
        ./buildconf --force; ./configure --host=wasm32-wasi host_alias=wasm32-musl-wasi --target=wasm32-wasi target_alias=wasm32-musl-wasi --without-iconv --without-openssl --without-libxml --without-pear --disable-phar --disable-opcache --disable-zend-signals --without-pcre-jit --disable-pdo --disable-fiber-asm --disable-posix --without-sqlite3 --disable-dom --disable-xml --disable-simplexml --without-libxml --disable-xmlreader --disable-xmlwriter --disable-fileinfo --disable-session
     }
 
+    genstubs() {
+      find . -name '*_arginfo.h' | xargs -I{} make {}
+    }
+
     build() {
       make -j cgi cli
     }
