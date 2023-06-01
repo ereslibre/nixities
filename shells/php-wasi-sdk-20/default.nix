@@ -38,6 +38,10 @@ mkShell {
     }
 
     build() {
+      make -j cgi cli
+    }
+
+    build-all() {
       build/gen_stub.php --generate-optimizer-info -f
       make -j cgi cli
     }
