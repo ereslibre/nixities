@@ -1,9 +1,10 @@
-{ mkShell, pkgsLLVM, allWasmTools, llvmPackages_latest }:
-mkShell.override { inherit (pkgsLLVM) stdenv; } {
+{ mkShell, pkgsLLVM, allWasmTools, llvmPackages_16 }:
+let
+  llvmPackages = llvmPackages_16;
+in mkShell.override { inherit (llvmPackages) stdenv; } {
   nativeBuildInputs = allWasmTools;
-  shellHook = let llvm = llvmPackages_latest.llvm;
-  in ''
-    export AR=${llvm}/bin/llvm-ar
-    export NM=${llvm}/bin/llvm-nm
+  shellHook = ''
+    export AR=${llvmPackages.llvm}/bin/llvm-ar
+    export NM=${llvmPackages.llvm}/bin/llvm-nm
   '';
 }
