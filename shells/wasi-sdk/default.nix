@@ -1,4 +1,8 @@
-{ mkShell, allWasmTools, wasi-sdk }:
+{
+  mkShell,
+  allWasmTools,
+  wasi-sdk,
+}:
 mkShell {
   buildInputs = allWasmTools;
   shellHook = ''

@@ -5,24 +5,32 @@
     systems.url = "github:nix-systems/default";
   };
 
-  outputs = { self, devenv, nixities, systems, ... }@inputs:
-    let forEachSystem = nixities.nixpkgs.lib.genAttrs (import systems);
+  outputs = {
+    self,
+    devenv,
+    nixities,
+    systems,
+    ...
+  } @ inputs: let
+    forEachSystem = nixities.nixpkgs.lib.genAttrs (import systems);
+  in {
+    devShells = forEachSystem (system: let
+      pkgs = nixities.legacyPackages.${system};
     in {
-      devShells = forEachSystem (system:
-        let pkgs = nixities.legacyPackages.${system};
-        in {
-          default = devenv.lib.mkShell {
-            inherit pkgs;
-            inputs.nixpkgs = nixities.nixpkgs;
-            modules = [{
-              # https://devenv.sh/reference/options/
-              packages = with pkgs; [ hello ];
+      default = devenv.lib.mkShell {
+        inherit pkgs;
+        inputs.nixpkgs = nixities.nixpkgs;
+        modules = [
+          {
+            # https://devenv.sh/reference/options/
+            packages = with pkgs; [hello];
 
-              enterShell = ''
-                hello
-              '';
-            }];
-          };
-        });
-    };
+            enterShell = ''
+              hello
+            '';
+          }
+        ];
+      };
+    });
+  };
 }

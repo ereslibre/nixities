@@ -1,6 +1,15 @@
-{ mkShell, allWasmTools, autoconf, bison, coreutils, php, re2c, wasi-sdk-20 }:
+{
+  mkShell,
+  allWasmTools,
+  autoconf,
+  bison,
+  coreutils,
+  php,
+  re2c,
+  wasi-sdk-20,
+}:
 mkShell {
-  buildInputs = allWasmTools ++ [ autoconf bison coreutils php re2c ];
+  buildInputs = allWasmTools ++ [autoconf bison coreutils php re2c];
   shellHook = ''
     export WASI_SDK_PATH="${wasi-sdk-20}"
     export PATH=$PATH:$WASI_SDK_PATH/bin
