@@ -28,23 +28,31 @@
         clang = pkgs.callPackage ./shells/clang {inherit devGenericTools;};
         default = self.devShells.${system}.nix;
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra cachix];};
-        php.wasi-sdk-19 = pkgs.callPackage ./shells/php-wasi-sdk-19 {
+        php.wasi-sdk-19 = pkgs.callPackage ./shells/php-wasi-sdk {
           inherit allWasmTools;
-          inherit (self.packages.${system}) wasi-sdk-19;
+          wasi-sdk = self.packages.${system}.wasi-sdk-19;
         };
-        php.wasi-sdk-20 = pkgs.callPackage ./shells/php-wasi-sdk-20 {
+        php.wasi-sdk-20 = pkgs.callPackage ./shells/php-wasi-sdk {
           inherit allWasmTools;
-          inherit (self.packages.${system}) wasi-sdk-20;
+          wasi-sdk = self.packages.${system}.wasi-sdk-20;
         };
         wasi-libc =
           pkgs.callPackage ./shells/wasi-libc {inherit allWasmTools;};
-        wasi-sdk = pkgs.callPackage ./shells/wasi-sdk {
+        wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
           inherit allWasmTools;
-          inherit (self.packages.${system}) wasi-sdk;
+          wasi-sdk = self.packages.${system}.wasi-sdk-19;
         };
-        wasi-vfs = pkgs.callPackage ./shells/wasi-vfs {
+        wasi-sdk-20 = pkgs.callPackage ./shells/wasi-sdk {
           inherit allWasmTools;
-          inherit (self.packages.${system}) wasi-sdk;
+          wasi-sdk = self.packages.${system}.wasi-sdk-20;
+        };
+        wasi-vfs-19 = pkgs.callPackage ./shells/wasi-vfs {
+          inherit allWasmTools;
+          wasi-sdk = self.packages.${system}.wasi-sdk-19;
+        };
+        wasi-vfs-20 = pkgs.callPackage ./shells/wasi-vfs {
+          inherit allWasmTools;
+          wasi-sdk = self.packages.${system}.wasi-sdk-20;
         };
         wasm = pkgs.callPackage ./shells/wasm {inherit allWasmTools;};
         work = {

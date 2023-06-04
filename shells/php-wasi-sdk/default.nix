@@ -6,12 +6,12 @@
   coreutils,
   php,
   re2c,
-  wasi-sdk-19,
+  wasi-sdk,
 }:
 mkShell {
   buildInputs = allWasmTools ++ [autoconf bison coreutils php re2c];
   shellHook = ''
-    export WASI_SDK_PATH="${wasi-sdk-19}"
+    export WASI_SDK_PATH="${wasi-sdk}"
     export PATH=$PATH:$WASI_SDK_PATH/bin
     export CC="$WASI_SDK_PATH/bin/clang --sysroot=$WASI_SDK_PATH/share/wasi-sysroot"
     export CFLAGS="-O2 -D_WASI_EMULATED_GETPID -D_WASI_EMULATED_SIGNAL -D_WASI_EMULATED_PROCESS_CLOCKS"
