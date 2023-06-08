@@ -28,14 +28,6 @@
         clang = pkgs.callPackage ./shells/clang {inherit devGenericTools;};
         default = self.devShells.${system}.nix;
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra cachix];};
-        php.wasi-sdk-19 = pkgs.callPackage ./shells/php-wasi-sdk {
-          inherit allWasmTools;
-          wasi-sdk = self.packages.${system}.wasi-sdk-19;
-        };
-        php.wasi-sdk-20 = pkgs.callPackage ./shells/php-wasi-sdk {
-          inherit allWasmTools;
-          wasi-sdk = self.packages.${system}.wasi-sdk-20;
-        };
         wasi-libc =
           pkgs.callPackage ./shells/wasi-libc {inherit allWasmTools;};
         wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
@@ -56,8 +48,21 @@
         };
         wasm = pkgs.callPackage ./shells/wasm {inherit allWasmTools;};
         work = {
-          wws = pkgs.callPackage ./shells/work/wws {
-            inherit (pkgs) pkg-config clang openssl;
+          wws =
+            pkgs.callPackage ./shells/work/wws {
+            };
+          php = {
+            native =
+              pkgs.callPackage ./shells/work/php {
+              };
+            wasi-sdk-19 = pkgs.callPackage ./shells/work/php.wasi {
+              inherit allWasmTools;
+              wasi-sdk = self.packages.${system}.wasi-sdk-19;
+            };
+            wasi-sdk-20 = pkgs.callPackage ./shells/work/php.wasi {
+              inherit allWasmTools;
+              wasi-sdk = self.packages.${system}.wasi-sdk-20;
+            };
           };
         };
       };
