@@ -24,7 +24,7 @@
         modules = [
           ({pkgs, ...}: {
             # https://devenv.sh/reference/options/
-            packages = with pkgs; [hello];
+            packages = with pkgs; [hello pkg-config];
 
             enterShell = ''
               hello
