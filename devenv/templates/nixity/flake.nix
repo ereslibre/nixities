@@ -15,7 +15,7 @@
     forEachSystem = nixities.nixpkgs.lib.genAttrs (import systems);
   in {
     devShells = forEachSystem (system: let
-      pkgs = nixities.legacyPackages.${system};
+      pkgs = import nixities.nixpkgs {inherit system;};
     in {
       # The default devShell
       default = devenv.lib.mkShell {
