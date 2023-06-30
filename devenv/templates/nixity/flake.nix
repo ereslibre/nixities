@@ -24,17 +24,20 @@
         modules = [
           ({pkgs, ...}: {
             # https://devenv.sh/reference/options/
-            packages = with pkgs; [hello pkg-config];
-
-            enterShell = ''
-              hello
-            '';
+            # packages = with pkgs; [hello pkg-config];
+            # languages.cplusplus.enable = true;
+            # pre-commit.hooks = {
+            #   clang-format.enable = true;
+            # };
+            # enterShell = ''
+            #   hello
+            # '';
           })
         ];
       };
       # Example of another devShell directly forwarded from the
       # devShells that nixities exposes
-      inherit (nixities.devShells.${system}) wasm;
+      # inherit (nixities.devShells.${system}) wasm;
     });
   };
 }
