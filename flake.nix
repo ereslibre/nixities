@@ -28,6 +28,7 @@
         clang = pkgs.callPackage ./shells/clang {inherit devGenericTools;};
         default = self.devShells.${system}.nix;
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra cachix];};
+        rustc = pkgs.callPackage ./shells/rustc {};
         wasi-libc =
           pkgs.callPackage ./shells/wasi-libc {inherit allWasmTools;};
         wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
