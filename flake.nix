@@ -22,13 +22,13 @@
       devShells = let
         wasmRuntimes = with pkgs; [wasmer wasmtime wavm];
         wasmGenericTools = with pkgs; [binaryen wabt wasm-tools];
-        devGenericTools = with pkgs; [lldb];
+        devGenericTools = with pkgs; [lldb pkg-config];
         allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
       in {
         clang = pkgs.callPackage ./shells/clang {inherit devGenericTools;};
         default = self.devShells.${system}.nix;
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra cachix];};
-        rustc = pkgs.callPackage ./shells/rustc {};
+        rustc = pkgs.callPackage ./shells/rustc {inherit devGenericTools;};
         wasi-libc =
           pkgs.callPackage ./shells/wasi-libc {inherit allWasmTools;};
         wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
