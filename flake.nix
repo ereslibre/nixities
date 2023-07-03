@@ -27,8 +27,7 @@
       in {
         clang = pkgs.callPackage ./shells/clang {inherit devGenericTools;};
         default = self.devShells.${system}.nix;
-        nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra cachix];};
-        rustc = pkgs.callPackage ./shells/rustc {inherit devGenericTools;};
+        nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra];};
         wasi-libc =
           pkgs.callPackage ./shells/wasi-libc {inherit allWasmTools;};
         wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
@@ -49,13 +48,10 @@
         };
         wasm = pkgs.callPackage ./shells/wasm {inherit allWasmTools;};
         work = {
-          wws =
-            pkgs.callPackage ./shells/work/wws {
-            };
+          wasm-labs = pkgs.callPackage ./shells/work/wasm-labs {};
+          wws = pkgs.callPackage ./shells/work/wws {};
           php = {
-            native =
-              pkgs.callPackage ./shells/work/php {
-              };
+            native = pkgs.callPackage ./shells/work/php {};
             wasi-sdk-19 = pkgs.callPackage ./shells/work/php.wasi {
               inherit allWasmTools;
               wasi-sdk = self.packages.${system}.wasi-sdk-19;
