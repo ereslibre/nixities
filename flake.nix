@@ -12,7 +12,10 @@
     nixpkgs,
   }:
     flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in {
       packages = {
         wasi-sdk-19 = pkgs.callPackage ./packages/wasi-sdk-19 {};
@@ -28,6 +31,7 @@
         clang = pkgs.callPackage ./shells/clang {inherit devGenericTools;};
         default = self.devShells.${system}.nix;
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra];};
+        onnx = pkgs.callPackage ./shells/onnx {};
         wasi-libc =
           pkgs.callPackage ./shells/wasi-libc {inherit allWasmTools;};
         wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
