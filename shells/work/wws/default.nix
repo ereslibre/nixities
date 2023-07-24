@@ -1,7 +1,15 @@
 {
+  lib,
   mkShell,
-  pkg-config,
   clang,
   openssl,
+  pkg-config,
+  stdenv,
+  darwin,
+  iconv,
 }:
-mkShell {nativeBuildInputs = [pkg-config clang openssl];}
+mkShell {
+  nativeBuildInputs =
+    [clang pkg-config openssl]
+    ++ lib.optionals stdenv.isDarwin [darwin.apple_sdk.frameworks.Security iconv];
+}
