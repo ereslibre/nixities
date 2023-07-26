@@ -32,6 +32,7 @@
         default = self.devShells.${system}.nix;
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra];};
         onnx = pkgs.callPackage ./shells/onnx {};
+        rustc = pkgs.callPackage ./shells/rustc {inherit devGenericTools;};
         wasi-libc =
           pkgs.callPackage ./shells/wasi-libc {inherit allWasmTools;};
         wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
