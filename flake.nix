@@ -26,7 +26,7 @@
         wasi-sdk-19 = pkgs.callPackage ./packages/wasi-sdk-19 {};
         wasi-sdk-20 = pkgs.callPackage ./packages/wasi-sdk-20 {};
         vms =
-          nixpkgs.lib.mapAttrs (name: nixosDefinition: self.nixosConfigurations.vms.${name}.config.microvm.declaredRunner) self.outputs.nixosConfigurations.vms;
+          nixpkgs.lib.mapAttrs (name: nixosDefinition: nixosDefinition.config.microvm.declaredRunner) self.outputs.nixosConfigurations.vms;
       };
       legacyPackages = pkgs;
       devShells = let
