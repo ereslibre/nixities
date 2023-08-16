@@ -3,12 +3,17 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
+    microvm = {
+      url = "github:astro/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.url = "nixpkgs/nixos-23.05";
   };
 
   outputs = {
     self,
     flake-utils,
+    microvm,
     nixpkgs,
   }:
     flake-utils.lib.eachDefaultSystem (system: let
@@ -20,6 +25,8 @@
       packages = {
         wasi-sdk-19 = pkgs.callPackage ./packages/wasi-sdk-19 {};
         wasi-sdk-20 = pkgs.callPackage ./packages/wasi-sdk-20 {};
+        vms =
+          nixpkgs.lib.mapAttrs (name: nixosDefinition: self.nixosConfigurations.vms.${name}.config.microvm.declaredRunner) self.outputs.nixosConfigurations.vms;
       };
       legacyPackages = pkgs;
       devShells = let
@@ -77,6 +84,29 @@
           description = "A flake using the nixities project for devenv";
         };
         default = nixity;
+      };
+      nixosConfigurations.vms = {
+        bare = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            microvm.nixosModules.microvm
+            {
+              microvm = {
+                interfaces = [
+                  {
+                    type = "user";
+                    id = "microvm-test";
+                    mac = "02:00:00:00:00:01";
+                  }
+                ];
+                hypervisor = "qemu";
+              };
+              networking.hostName = "nixity-vm";
+              users.users.root.password = "";
+              nix.settings.experimental-features = ["nix-command" "flakes"];
+            }
+          ];
+        };
       };
     };
 }
