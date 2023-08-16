@@ -2,6 +2,10 @@
   description = "nixities";
 
   inputs = {
+    dotfiles = {
+      url = "github:ereslibre/dotfiles";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
     microvm = {
       url = "github:astro/microvm.nix";
@@ -12,6 +16,7 @@
 
   outputs = {
     self,
+    dotfiles,
     flake-utils,
     microvm,
     nixpkgs,
@@ -21,20 +26,21 @@
         inherit system;
         config.allowUnfree = true;
       };
+      wasmRuntimes = with pkgs; [wasmer wasmtime wavm];
+      wasmGenericTools = with pkgs; [binaryen wabt wasm-tools];
+      devGenericTools = with pkgs; [lldb pkg-config];
+      allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
     in {
       packages = {
         wasi-sdk-19 = pkgs.callPackage ./packages/wasi-sdk-19 {};
         wasi-sdk-20 = pkgs.callPackage ./packages/wasi-sdk-20 {};
         vms =
-          nixpkgs.lib.mapAttrs (name: nixosDefinition: nixosDefinition.config.microvm.declaredRunner) self.outputs.nixosConfigurations.vms;
+          nixpkgs.lib.mapAttrs
+          (name: nixosDefinition: nixosDefinition.config.microvm.declaredRunner)
+          self.outputs.nixosConfigurations.${system}.vms;
       };
       legacyPackages = pkgs;
-      devShells = let
-        wasmRuntimes = with pkgs; [wasmer wasmtime wavm];
-        wasmGenericTools = with pkgs; [binaryen wabt wasm-tools];
-        devGenericTools = with pkgs; [lldb pkg-config];
-        allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
-      in {
+      devShells = {
         clang = pkgs.callPackage ./shells/clang {inherit devGenericTools;};
         default = self.devShells.${system}.nix;
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra];};
@@ -75,19 +81,9 @@
           };
         };
       };
-    })
-    // {
-      inherit nixpkgs;
-      templates = rec {
-        nixity = {
-          path = ./devenv/templates/nixity;
-          description = "A flake using the nixities project for devenv";
-        };
-        default = nixity;
-      };
       nixosConfigurations.vms = {
-        bare = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+        generic-dev = nixpkgs.lib.nixosSystem {
+          inherit system;
           modules = [
             microvm.nixosModules.microvm
             {
@@ -102,11 +98,22 @@
                 hypervisor = "qemu";
               };
               networking.hostName = "nixity-vm";
-              users.users.root.password = "";
               nix.settings.experimental-features = ["nix-command" "flakes"];
+              environment.systemPackages = devGenericTools;
+              services.getty.autologinUser = "root";
+              system.stateVersion = "23.05";
             }
           ];
         };
+      };
+    })
+    // {
+      templates = rec {
+        nixity = {
+          path = ./devenv/templates/nixity;
+          description = "A flake using the nixities project for devenv";
+        };
+        default = nixity;
       };
     };
 }
