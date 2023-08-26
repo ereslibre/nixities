@@ -115,5 +115,6 @@
         };
         default = nixity;
       };
-    };
+    }
+    // {inherit nixpkgs;};
 }
