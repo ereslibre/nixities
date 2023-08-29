@@ -3,11 +3,12 @@
   mkShell,
   clang,
   cmake,
+  containerd,
   openssl,
   pkg-config,
   protobuf,
   stdenv,
 }:
 mkShell {
-  nativeBuildInputs = [clang cmake pkg-config protobuf openssl];
+  nativeBuildInputs = [clang cmake containerd pkg-config protobuf openssl];
 }
