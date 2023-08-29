@@ -4,6 +4,7 @@
   clang,
   openssl,
   pkg-config,
+  protobuf,
   stdenv,
   darwin,
   iconv,
