@@ -42,6 +42,7 @@
       legacyPackages = pkgs;
       devShells = {
         clang = pkgs.callPackage ./shells/clang {inherit devGenericTools;};
+        containerd-wasm-shims = pkgs.callPackage ./shells/containerd-wasm-shims {};
         default = self.devShells.${system}.nix;
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra];};
         onnx = pkgs.callPackage ./shells/onnx {};
