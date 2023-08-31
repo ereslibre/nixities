@@ -11,6 +11,9 @@
 }:
 mkShell {
   nativeBuildInputs =
-    [clang pkg-config openssl openvino]
+    [clang pkg-config openssl]
     ++ lib.optionals stdenv.isDarwin [darwin.apple_sdk.frameworks.Security iconv];
+  shellHook = ''
+    . ${openvino}/setupvars.sh
+  '';
 }
