@@ -42,26 +42,14 @@
       legacyPackages = pkgs;
       devShells = {
         clang = pkgs.callPackage ./shells/clang {inherit devGenericTools;};
-        containerd-wasm-shims = pkgs.callPackage ./shells/containerd-wasm-shims {};
         default = self.devShells.${system}.nix;
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra];};
         onnx = pkgs.callPackage ./shells/onnx {};
-        rustc = pkgs.callPackage ./shells/rustc {inherit devGenericTools;};
-        wasi-libc =
-          pkgs.callPackage ./shells/wasi-libc {inherit allWasmTools;};
         wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
           inherit allWasmTools;
           wasi-sdk = self.packages.${system}.wasi-sdk-19;
         };
         wasi-sdk-20 = pkgs.callPackage ./shells/wasi-sdk {
-          inherit allWasmTools;
-          wasi-sdk = self.packages.${system}.wasi-sdk-20;
-        };
-        wasi-vfs-19 = pkgs.callPackage ./shells/wasi-vfs {
-          inherit allWasmTools;
-          wasi-sdk = self.packages.${system}.wasi-sdk-19;
-        };
-        wasi-vfs-20 = pkgs.callPackage ./shells/wasi-vfs {
           inherit allWasmTools;
           wasi-sdk = self.packages.${system}.wasi-sdk-20;
         };
@@ -81,7 +69,21 @@
             };
           };
         };
-        zig = pkgs.callPackage ./shells/zig {};
+        upstream = {
+          containerd-wasm-shims = pkgs.callPackage ./shells/upstream/containerd-wasm-shims {};
+          rustc = pkgs.callPackage ./shells/upstream/rustc {inherit devGenericTools;};
+          wasi-libc =
+            pkgs.callPackage ./shells/upstream/wasi-libc {inherit allWasmTools;};
+          wasi-vfs-19 = pkgs.callPackage ./shells/upstream/wasi-vfs {
+            inherit allWasmTools;
+            wasi-sdk = self.packages.${system}.wasi-sdk-19;
+          };
+          wasi-vfs-20 = pkgs.callPackage ./shells/upstream/wasi-vfs {
+            inherit allWasmTools;
+            wasi-sdk = self.packages.${system}.wasi-sdk-20;
+          };
+          zig = pkgs.callPackage ./shells/upstream/zig {};
+        };
       };
       nixosConfigurations.vms = {
         generic-dev = nixpkgs.lib.nixosSystem {
