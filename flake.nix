@@ -81,6 +81,7 @@
             };
           };
         };
+        zig = pkgs.callPackage ./shells/zig {};
       };
       nixosConfigurations.vms = {
         generic-dev = nixpkgs.lib.nixosSystem {
