@@ -18,8 +18,8 @@ mkShell {
     # Building Zig
 
     First, build the stage3 compiler. Recommended way:
-      - `mkdir build`
-      - `cmake -DCMAKE_BUILD_TYPE=Release -GNinja -DZIG_NO_LIB=ON`
+      - `mkdir build; cd build`
+      - `cmake -DCMAKE_BUILD_TYPE=Release -GNinja -DZIG_NO_LIB=ON ..`
       - `ninja`
 
     This `ninja` step also applies if there were upstream changes.
