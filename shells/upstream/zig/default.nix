@@ -9,7 +9,6 @@
   bat,
 }:
 mkShell {
-  # LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:${stdenv.cc.cc.lib}/lib";
   NIX_HARDENING_ENABLE = "";
   nativeBuildInputs = [ninja cmake llvmPackages_16.llvm.dev];
   buildInputs = [libxml2 zlib] ++ (with llvmPackages_16; [libclang lld llvm]);
