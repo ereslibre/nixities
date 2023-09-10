@@ -115,7 +115,11 @@
       templates = rec {
         nixity = {
           path = ./devenv/templates/nixity;
-          description = "A flake using the nixities project for devenv";
+          description = "Generic nixity";
+        };
+        jupyter = {
+          path = ./devenv/templates/jupyter;
+          description = "Jupyter notebook integration nixity";
         };
         default = nixity;
       };

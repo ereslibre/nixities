@@ -1,8 +1,8 @@
 {
+  description = "Nixity";
+
   inputs = {
     devenv.url = "github:cachix/devenv";
-    # Jupyter notebooks
-    # jupyenv.url = "github:tweag/jupyenv";
     nixities.url = "github:ereslibre/nixities";
     systems.url = "github:nix-systems/default";
   };
