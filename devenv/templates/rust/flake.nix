@@ -30,9 +30,6 @@
             ...
           }: {
             languages.rust.enable = true;
-            packages = lib.optionals pkgs.stdenv.isDarwin (with pkgs.darwin.apple_sdk; [
-              frameworks.Security
-            ]);
             pre-commit.hooks = {
               rustfmt.enable = true;
               clippy.enable = true;
