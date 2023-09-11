@@ -29,23 +29,6 @@
               enable = true;
               package = pkgs.haskell.compiler.ghc946;
             };
-            packages = with pkgs; [
-              binutils
-              clang
-              coreutils
-              findutils
-              gawk
-              git
-              glibc
-              gnugrep
-              gnumake
-              gnused
-              pkg-config
-              gnutar
-              xz
-              zlib
-              zlib.dev
-            ];
             pre-commit.hooks.ormolu.enable = true;
           })
         ];
