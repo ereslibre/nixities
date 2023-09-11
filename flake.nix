@@ -113,13 +113,21 @@
     })
     // {
       templates = rec {
-        nixity = {
-          path = ./devenv/templates/nixity;
-          description = "Generic nixity";
+        haskell = {
+          path = ./devenv/templates/haskell;
+          description = "Haskell project";
         };
         jupyter = {
           path = ./devenv/templates/jupyter;
           description = "Jupyter notebook integration nixity";
+        };
+        rust = {
+          path = ./devenv/templates/rust;
+          description = "Rust project";
+        };
+        nixity = {
+          path = ./devenv/templates/nixity;
+          description = "Generic nixity";
         };
         default = nixity;
       };
