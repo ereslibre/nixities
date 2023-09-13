@@ -101,9 +101,31 @@
                 ];
                 hypervisor = "qemu";
               };
+              systemd.services.run-script-at-init = {
+                description = "A minimal example for a custom systemd service";
+                wantedBy = ["multi-user.target"];
+                # serviceConfig = {
+                #   ExecStart = "/some/path";
+                #   User = "root";
+                #   Group = "root";
+                # };
+                script = ''
+                  touch /root/hello-world
+                '';
+              };
               networking.hostName = "nixity-vm";
               nix.settings.experimental-features = ["nix-command" "flakes"];
-              environment.systemPackages = devGenericTools;
+              environment = {
+                shellInit = ''
+                  clear
+                  ${pkgs.bat}/bin/bat --decorations=never --language=markdown <<EOF
+                  # Welcome to your NixOS-based VM!
+
+                    - User: $(whoami)
+                  EOF
+                '';
+                systemPackages = devGenericTools;
+              };
               services.getty.autologinUser = "root";
               system.stateVersion = "23.05";
             }
