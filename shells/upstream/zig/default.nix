@@ -5,13 +5,14 @@
   cmake,
   llvmPackages_16,
   libxml2,
+  wasmtime,
   zlib,
   bat,
 }:
 mkShell {
   NIX_HARDENING_ENABLE = "";
   nativeBuildInputs = [ninja cmake llvmPackages_16.llvm.dev];
-  buildInputs = [libxml2 zlib] ++ (with llvmPackages_16; [libclang lld llvm]);
+  buildInputs = [libxml2 wasmtime zlib] ++ (with llvmPackages_16; [libclang lld llvm]);
   shellHook = ''
     ${bat}/bin/bat --language=markdown --decorations=never <<"EOF"
     # Building Zig
