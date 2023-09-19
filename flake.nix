@@ -55,6 +55,7 @@
         };
         wasm = pkgs.callPackage ./shells/wasm {inherit allWasmTools;};
         work = {
+          mod-wasm = pkgs.callPackage ./shells/work/mod-wasm {};
           wasm-labs = pkgs.callPackage ./shells/work/wasm-labs {};
           wws = pkgs.callPackage ./shells/work/wws {};
           php = {
