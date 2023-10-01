@@ -48,7 +48,11 @@
             kernel.python.science = {
               enable = true;
               extraPackages = ps: (with ps; [
+                matplotlib
                 numpy
+                pandas
+                pytools
+                scikit-learn
                 scipy
               ]);
             };
