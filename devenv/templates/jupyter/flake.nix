@@ -45,6 +45,7 @@
           ({...}: {
             kernel.python.minimal = {
               enable = true;
+              extraPackages = ps: with ps; [pytools matplotlib numpy pandas scikit-learn];
             };
           })
         ];
