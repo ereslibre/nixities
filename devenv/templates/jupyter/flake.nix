@@ -43,9 +43,14 @@
         inherit (nixities) nixpkgs;
         imports = [
           ({...}: {
-            kernel.python.minimal = {
+            kernel.python.minimal.enable = true;
+
+            kernel.python.science = {
               enable = true;
-              extraPackages = ps: with ps; [pytools matplotlib numpy pandas scikit-learn];
+              extraPackages = ps: (with ps; [
+                numpy
+                scipy
+              ]);
             };
           })
         ];
