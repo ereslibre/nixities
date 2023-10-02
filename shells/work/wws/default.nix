@@ -1,6 +1,7 @@
 {
   lib,
   mkShell,
+  wasm-tools,
   clang,
   openssl,
   openvino,
@@ -11,6 +12,8 @@
   iconv,
 }:
 mkShell {
+  buildInputs = [wasm-tools];
+
   nativeBuildInputs =
     [clang pkg-config openssl]
     ++ lib.optionals stdenv.isLinux [python3]
