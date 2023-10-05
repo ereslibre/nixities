@@ -17,7 +17,6 @@ mkShell {
 
   nativeBuildInputs =
     [clang pkg-config openssl]
-    ++ lib.optionals stdenv.isLinux [python3]
     ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [Security SystemConfiguration] ++ [iconv]);
 
   shellHook = let
@@ -43,8 +42,11 @@ mkShell {
           </plugins>
       </ie>
     '';
-  in ''
-    export OPENVINO_PLUGINS_XML=${openvino_plugins_xml}
-    . ${openvino}/setupvars.sh
-  '';
+  in
+    lib.optionalString stdenv.isLinux ''
+      export OPENVINO_PLUGINS_XML=${openvino_plugins_xml}
+    ''
+    + ''
+      . ${openvino}/setupvars.sh
+    '';
 }
