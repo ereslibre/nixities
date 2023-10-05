@@ -44,7 +44,7 @@ mkShell {
       </ie>
     '';
   in
-    lib.optionalString stdenv.isLinux ''
+    ''
       export OPENVINO_PLUGINS_XML=${openvino_plugins_xml}
       . ${openvino}/setupvars.sh
     '';
