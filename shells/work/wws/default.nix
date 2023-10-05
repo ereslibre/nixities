@@ -43,9 +43,8 @@ mkShell {
           </plugins>
       </ie>
     '';
-  in
-    ''
-      export OPENVINO_PLUGINS_XML=${openvino_plugins_xml}
-      . ${openvino}/setupvars.sh
-    '';
+  in ''
+    export OPENVINO_PLUGINS_XML=${openvino_plugins_xml}
+    . ${openvino}/setupvars.sh
+  '';
 }
