@@ -3,6 +3,7 @@
   mkShell,
   wasm-tools,
   clang,
+  nodejs,
   openssl,
   openvino,
   pkg-config,
@@ -13,7 +14,7 @@
   writeText,
 }:
 mkShell {
-  buildInputs = [wasm-tools];
+  buildInputs = [nodejs wasm-tools];
 
   nativeBuildInputs =
     [clang pkg-config openssl]
