@@ -2,23 +2,23 @@
   lib,
   mkShell,
   wasm-tools,
+  wasmtime,
   clang,
   nodejs,
   openssl,
   openvino,
   pkg-config,
   python311,
-  wasmtime,
   stdenv,
   darwin,
   iconv,
   writeText,
 }:
 mkShell {
-  buildInputs = [nodejs python311 wasm-tools];
+  buildInputs = [nodejs python311 wasm-tools wasmtime];
 
   nativeBuildInputs =
-    [clang pkg-config openssl wasmtime]
+    [clang pkg-config openssl]
     ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [Security SystemConfiguration] ++ [iconv]);
 
   shellHook = let
