@@ -8,6 +8,7 @@
   openvino,
   pkg-config,
   python311,
+  wasmtime,
   stdenv,
   darwin,
   iconv,
@@ -17,7 +18,7 @@ mkShell {
   buildInputs = [nodejs python311 wasm-tools];
 
   nativeBuildInputs =
-    [clang pkg-config openssl]
+    [clang pkg-config openssl wasmtime]
     ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [Security SystemConfiguration] ++ [iconv]);
 
   shellHook = let
