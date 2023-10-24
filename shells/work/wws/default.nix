@@ -7,14 +7,14 @@
   openssl,
   openvino,
   pkg-config,
-  python3,
+  python311,
   stdenv,
   darwin,
   iconv,
   writeText,
 }:
 mkShell {
-  buildInputs = [nodejs wasm-tools];
+  buildInputs = [nodejs python311 wasm-tools];
 
   nativeBuildInputs =
     [clang pkg-config openssl]
