@@ -9,13 +9,14 @@
   openvino,
   pkg-config,
   python311,
+  python311Packages,
   stdenv,
   darwin,
   iconv,
   writeText,
 }:
 mkShell {
-  buildInputs = [nodejs python311 wasm-tools wasmtime];
+  buildInputs = [nodejs python311 python311Packages.pip wasm-tools wasmtime];
 
   nativeBuildInputs =
     [clang pkg-config openssl]
