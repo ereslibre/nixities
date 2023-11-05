@@ -144,6 +144,10 @@
           path = ./devenv/templates/jupyter;
           description = "Jupyter notebook integration nixity";
         };
+        python = {
+          path = ./devenv/templates/python;
+          description = "Python project";
+        };
         rust = {
           path = ./devenv/templates/rust;
           description = "Rust project";
