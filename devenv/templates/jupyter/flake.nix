@@ -27,10 +27,13 @@
         inputs.nixpkgs = nixities.nixpkgs;
         modules = [
           ({pkgs, ...}: {
+            scripts = {
+              start-notebook.exec = "nix run . -- --ip 0.0.0.0";
+            };
             enterShell = ''
               cat <<"EOF" | ${pkgs.bat}/bin/bat --decorations=never --language=markdown
               # Instructions
-              * Start the Jupyter Notebook: `nix run . -- --ip 0.0.0.0`
+              * Start the Jupyter Notebook: `start-notebook`
               EOF
             '';
           })
@@ -54,6 +57,7 @@
                 pytools
                 scikit-learn
                 scipy
+                torch-bin
               ]);
             };
           })
