@@ -32,11 +32,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1697088726,
-        "narHash": "sha256-r3AWB2AmvGhOf+qtmcLSC/Def93j2of1Yiyb3sE0TZk=",
+        "lastModified": 1700686737,
+        "narHash": "sha256-w+KBoznJyDoUTrI/8V1jAsZZSZ3lZY0cR6kyIqNjJH8=",
         "owner": "ereslibre",
         "repo": "dotfiles",
-        "rev": "6ad1042f36d695ef540f9ae21dfd2b73a29ff1f3",
+        "rev": "e2fe24d0dc9bd5311e12f7c86af22c95737e849b",
         "type": "github"
       },
       "original": {
@@ -161,11 +161,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1695108154,
-        "narHash": "sha256-gSg7UTVtls2yO9lKtP0yb66XBHT1Fx5qZSZbGMpSn2c=",
+        "lastModified": 1700392168,
+        "narHash": "sha256-v5LprEFx3u4+1vmds9K0/i7sHjT0IYGs7u9v54iz/OA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "07682fff75d41f18327a871088d20af2710d4744",
+        "rev": "28535c3a34d79071f2ccb68671971ce0c0984d7e",
         "type": "github"
       },
       "original": {
@@ -199,11 +199,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1697304130,
-        "narHash": "sha256-ovr9mPbMW9UxI1iSeQrIJO8Q2YfLTe8hcRkl6ec0v3c=",
+        "lastModified": 1700320345,
+        "narHash": "sha256-HDBVj9gEOG2ZBGc+UGtjqDsOIvYOQtDxDRGrbiWOXl0=",
         "owner": "astro",
         "repo": "microvm.nix",
-        "rev": "38ce07ca9c5c02c391682defe0bfff947cc5d7a1",
+        "rev": "b16e6261ad2f0bca6ac2a4b7a4d3377cf5e3d95d",
         "type": "github"
       },
       "original": {
@@ -287,17 +287,17 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1697059129,
-        "narHash": "sha256-9NJcFF9CEYPvHJ5ckE8kvINvI84SZZ87PvqMbH6pro0=",
+        "lastModified": 1700687566,
+        "narHash": "sha256-YKUfO6XvhbnWytracJLWAjieil1fDBngejBEcm5TnYU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5e4c2ada4fcd54b99d56d7bd62f384511a7e2593",
+        "rev": "c5c8d32e5643cbe9c5fd6cd7e2b2e03a7b3dbefe",
         "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-unstable",
-        "type": "indirect"
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "pre-commit-hooks": {
