@@ -159,13 +159,5 @@
         default = nixity;
       };
     }
-    // {
-      inherit nixpkgs;
-      nixpkgs-cuda = import nixpkgs {
-        config = {
-          allowUnfree = true;
-          cudaSupport = true;
-        };
-      };
-    };
+    // {inherit nixpkgs;};
 }
