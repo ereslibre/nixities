@@ -39,7 +39,9 @@
       allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
     in {
       packages = {
-        ollama = pkgs-cuda.callPackage ./packages/ollama {};
+        cuda = {
+          ollama = pkgs-cuda.callPackage ./packages/ollama {};
+        };
         wasi-sdk-19 = pkgs.callPackage ./packages/wasi-sdk-19 {};
         wasi-sdk-20 = pkgs.callPackage ./packages/wasi-sdk-20 {};
         vms =
