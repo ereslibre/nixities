@@ -2,21 +2,16 @@
   description = "nixities";
 
   inputs = {
-    dotfiles = {
-      url = "github:ereslibre/dotfiles";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     flake-utils.url = "github:numtide/flake-utils";
     microvm = {
       url = "github:astro/microvm.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
   outputs = {
     self,
-    dotfiles,
     flake-utils,
     microvm,
     nixpkgs,
