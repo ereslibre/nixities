@@ -1,5 +1,4 @@
 {
-  lib,
   llama-cpp,
   ollama,
 }:
