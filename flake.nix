@@ -36,6 +36,7 @@
       packages = {
         cuda = {
           ollama = pkgs-cuda.callPackage ./packages/ollama {};
+          llama-cpp = pkgs-cuda.callPackage ./packages/llama-cpp {};
         };
         wasi-sdk-19 = pkgs.callPackage ./packages/wasi-sdk-19 {};
         wasi-sdk-20 = pkgs.callPackage ./packages/wasi-sdk-20 {};
