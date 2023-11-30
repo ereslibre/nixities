@@ -48,7 +48,10 @@
       legacyPackages = pkgs;
       devShells = {
         default = self.devShells.${system}.nix;
-        generic-dev = pkgs.callPackage ./shells/generic-dev {inherit devGenericTools;};
+        languages = {
+          generic = pkgs.callPackage ./shells/languages/generic {inherit devGenericTools;};
+          python3 = pkgs.callPackage ./shells/languages/python3 {};
+        };
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra];};
         onnx = pkgs.callPackage ./shells/onnx {};
         wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
