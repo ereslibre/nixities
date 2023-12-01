@@ -29,7 +29,7 @@
             lib,
             ...
           }: let
-            pythonPackages = pkgs.pythonPackages;
+            pythonPackages = pkgs.python3Packages;
           in {
             languages.python = {
               enable = true;
