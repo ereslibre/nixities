@@ -29,7 +29,7 @@
             lib,
             ...
           }: let
-            pythonPackages = pkgs.pythonPackages;
+            pythonPackages = pkgs.python3Packages;
           in {
             languages.python = {
               enable = true;
@@ -37,7 +37,12 @@
             };
             packages = with pythonPackages; [
               pip
+              venvShellHook
             ];
+            enterShell = ''
+              export PYTHONPATH=$PWD/.pip:$PYTHONPATH
+              pip install -r requirements.txt -t .pip
+            '';
             pre-commit.hooks = {
               black.enable = true;
             };

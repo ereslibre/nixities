@@ -157,6 +157,10 @@
           path = ./devenv/templates/python;
           description = "Python project";
         };
+        python-venv = {
+          path = ./devenv/templates/python-venv;
+          description = "Python project (with venv)";
+        };
         rust = {
           path = ./devenv/templates/rust;
           description = "Rust project";
