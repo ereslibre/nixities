@@ -31,6 +31,9 @@
           }: let
             pythonPackages = pkgs.python3Packages;
           in {
+            enterShell = ''
+              export PYTHONPATH="$HOME/.pip:$PYTHONPATH";
+            '';
             languages.python = {
               enable = true;
               package = pythonPackages.python;
@@ -40,6 +43,11 @@
             ];
             pre-commit.hooks = {
               black.enable = true;
+            };
+            scripts = {
+              pip-install.exec = ''
+                ${pythonPackages.pip}/bin/pip install -r requirements.txt -t $HOME/.pip
+              '';
             };
           })
         ];

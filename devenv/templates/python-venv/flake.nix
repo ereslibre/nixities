@@ -31,6 +31,9 @@
           }: let
             pythonPackages = pkgs.python3Packages;
           in {
+            enterShell = ''
+              export PYTHONPATH="$HOME/.pip:$PYTHONPATH";
+            '';
             languages.python = {
               enable = true;
               package = pythonPackages.python;
@@ -39,12 +42,13 @@
               pip
               venvShellHook
             ];
-            enterShell = ''
-              export PYTHONPATH=$PWD/.pip:$PYTHONPATH
-              pip install -r requirements.txt -t .pip
-            '';
             pre-commit.hooks = {
               black.enable = true;
+            };
+            scripts = {
+              pip-install.exec = ''
+                ${pythonPackages.pip}/bin/pip install -r requirements.txt -t $HOME/.pip
+              '';
             };
           })
         ];
