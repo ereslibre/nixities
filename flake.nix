@@ -81,6 +81,7 @@
         };
         upstream = {
           containerd-wasm-shims = pkgs.callPackage ./shells/upstream/containerd-wasm-shims {};
+          elm = pkgs.callPackage ./shells/upstream/elm {};
           rustc = pkgs.callPackage ./shells/upstream/rustc {inherit devGenericTools;};
           wasi-libc =
             pkgs.callPackage ./shells/upstream/wasi-libc {inherit allWasmTools;};
