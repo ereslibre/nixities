@@ -38,9 +38,11 @@
               enable = true;
               package = pythonPackages.python;
             };
-            packages = with pythonPackages; [
-              pip
-            ];
+            packages =
+              (with pkgs; [stdenv.cc.cc.lib])
+              ++ (with pythonPackages; [
+                pip
+              ]);
             pre-commit.hooks = {
               black.enable = true;
             };

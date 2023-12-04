@@ -38,10 +38,12 @@
               enable = true;
               package = pythonPackages.python;
             };
-            packages = with pythonPackages; [
-              pip
-              venvShellHook
-            ];
+            packages =
+              (with pkgs; [stdenv.cc.cc.lib])
+              ++ (with pythonPackages; [
+                pip
+                venvShellHook
+              ]);
             pre-commit.hooks = {
               black.enable = true;
             };
