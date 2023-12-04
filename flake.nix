@@ -4,7 +4,7 @@
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
     microvm = {
-      url = "github:astro/microvm.nix";
+      url = "github:ereslibre/microvm.nix/emulated-guest";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -103,6 +103,58 @@
             microvm.nixosModules.microvm
             {
               microvm = {
+                interfaces = [
+                  {
+                    type = "user";
+                    id = "microvm-test";
+                    mac = "02:00:00:00:00:01";
+                  }
+                ];
+                hypervisor = "qemu";
+              };
+              systemd.services.run-script-at-init = {
+                description = "A minimal example for a custom systemd service";
+                wantedBy = ["multi-user.target"];
+                # serviceConfig = {
+                #   ExecStart = "/some/path";
+                #   User = "root";
+                #   Group = "root";
+                # };
+                script = ''
+                  touch /root/hello-world
+                '';
+              };
+              networking.hostName = "nixity-vm";
+              nix.settings.experimental-features = ["nix-command" "flakes"];
+              environment = {
+                shellInit = ''
+                  clear
+                  ${pkgs.bat}/bin/bat --decorations=never --language=markdown <<EOF
+                  # Welcome to your NixOS-based VM!
+
+                    - User: $(whoami)
+                  EOF
+                '';
+                systemPackages = devGenericTools;
+              };
+              services.getty.autologinUser = "root";
+              system.stateVersion = "23.05";
+            }
+          ];
+        };
+        emulated-dev = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = let
+            pkgs = import nixpkgs {
+              inherit system;
+              crossSystem.config = "aarch64-unknown-linux-gnu";
+            };
+          in [
+            {nixpkgs.crossSystem.config = "aarch64-unknown-linux-gnu";}
+            microvm.nixosModules.microvm
+            {
+              microvm = {
+                cpu = "cortex-a53";
                 interfaces = [
                   {
                     type = "user";
