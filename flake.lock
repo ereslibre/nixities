@@ -44,11 +44,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1701977444,
-        "narHash": "sha256-xf2U31nMPeYGsSO5RMgQ5yPcV3rbvD49XVmDdEAOWVU=",
+        "lastModified": 1702057109,
+        "narHash": "sha256-q2cb4EXG/BMxgKrO0N+aY283/hR6J1TmRk1w03MECkU=",
         "owner": "ereslibre",
         "repo": "microvm.nix",
-        "rev": "df33d4dc1496373cd352372c539a85077ccd8776",
+        "rev": "1c6319312a29ac1f5bcc9b5f5d7078725b46199e",
         "type": "github"
       },
       "original": {
