@@ -154,7 +154,7 @@
             microvm.nixosModules.microvm
             {
               microvm = {
-                cpu = "cortex-a53";
+                cpu = "cortex-a72";
                 interfaces = [
                   {
                     type = "user";
