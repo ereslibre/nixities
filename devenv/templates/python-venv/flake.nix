@@ -39,7 +39,7 @@
               package = pythonPackages.python;
             };
             packages =
-              (with pkgs; [stdenv.cc.cc.lib])
+              (with pkgs; [just stdenv.cc.cc.lib])
               ++ (with pythonPackages; [
                 pip
                 venvShellHook

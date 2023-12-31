@@ -27,6 +27,7 @@
         inputs.nixpkgs = nixities.nixpkgs;
         modules = [
           ({pkgs, ...}: {
+            packages = with pkgs; [just];
             scripts = {
               start-notebook.exec = "nix run . -- --ip 0.0.0.0";
             };

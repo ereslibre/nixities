@@ -30,6 +30,7 @@
             ...
           }: {
             languages.rust.enable = true;
+            packages = with pkgs; [just];
             pre-commit.hooks = {
               rustfmt.enable = true;
               clippy.enable = true;

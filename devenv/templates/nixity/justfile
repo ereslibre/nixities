@@ -1,0 +1,13 @@
+all: fmt lint build test
+
+fmt:
+  find . -name "*.nix" | xargs alejandra
+
+lint:
+  echo "Linting..."
+
+build:
+  echo "Building..."
+
+test:
+  echo "Testing..."

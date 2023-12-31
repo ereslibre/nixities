@@ -26,7 +26,7 @@
         modules = [
           ({pkgs, ...}: {
             # https://devenv.sh/reference/options/
-            # packages = with pkgs; [hello pkg-config];
+            packages = with pkgs; [just];
             # languages.cplusplus.enable = true;
             # pre-commit.hooks = {
             #   clang-format.enable = true;

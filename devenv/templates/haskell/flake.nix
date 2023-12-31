@@ -25,6 +25,7 @@
         inputs.nixpkgs = nixities.nixpkgs;
         modules = [
           ({pkgs, ...}: {
+            packages = with pkgs; [alejandra just];
             languages.haskell = {
               enable = true;
               package = pkgs.haskell.compiler.ghc946;
