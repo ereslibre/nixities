@@ -206,6 +206,14 @@
           path = ./devenv/templates/jupyter;
           description = "Jupyter notebook integration nixity";
         };
+        microvm = {
+          path = ./devenv/templates/microvm;
+          description = "MicroVM";
+        };
+        nixity = {
+          path = ./devenv/templates/nixity;
+          description = "Generic nixity";
+        };
         nixos-container = {
           path = ./devenv/templates/nixos-container;
           description = "NixOS container";
@@ -225,10 +233,6 @@
         rust = {
           path = ./devenv/templates/rust;
           description = "Rust project";
-        };
-        nixity = {
-          path = ./devenv/templates/nixity;
-          description = "Generic nixity";
         };
         default = nixity;
       };

@@ -1,0 +1,2 @@
+run:
+  nix run .#microvms.x86_64-linux.host.aarch64-linux.guest.config.microvm.declaredRunner
