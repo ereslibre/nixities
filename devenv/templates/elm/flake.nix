@@ -29,6 +29,11 @@
             lib,
             ...
           }: {
+            env = {
+              # `elm-land server` uses this envvar for setting up
+              # listener
+              HOST = "0.0.0.0";
+            };
             languages.elm.enable = true;
             packages = with pkgs; [elmPackages.elm-land just];
             pre-commit.hooks = {
