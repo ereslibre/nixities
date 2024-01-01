@@ -1,0 +1,8 @@
+build:
+  nix build .
+
+load: build
+  docker load < ./result
+
+build-for target:
+  nix build .#packages.{{target}}.default

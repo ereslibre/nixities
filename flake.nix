@@ -210,6 +210,10 @@
           path = ./devenv/templates/nixos-container;
           description = "NixOS container";
         };
+        oci-container = {
+          path = ./devenv/templates/oci-container;
+          description = "OCI container";
+        };
         python = {
           path = ./devenv/templates/python;
           description = "Python project";
