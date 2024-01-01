@@ -1,2 +1,5 @@
+# Elm nixity .gitignore starts here
 /.devenv
 /.direnv
+/.pre-commit-config.yaml
+# Elm nixity .gitignore ends here
