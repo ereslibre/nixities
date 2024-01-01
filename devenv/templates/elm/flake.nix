@@ -44,26 +44,30 @@
               elm-review.enable = false;
               elm-test.enable = false;
             };
-            scripts = { # User scripts
-              init.exec = ''
-                mkdir .app
-                ${pkgs.elmPackages.elm-land}/bin/elm-land init .app
-                cat .app/.gitignore >> .gitignore
-                rm .app/.gitignore
-                mv .app/{.*,*} .
-                rmdir .app
-              '';
-              start.exec = ''
-                parallel ::: elm-land-server tailwindcss-watcher
-              '';
-            } // { # Auxiliary scripts
-              elm-land-server.exec = ''
-                elm-land server
-              '';
-              tailwindcss-watcher.exec = ''
-                tailwindcss -i ./tailwind.css -o ./public/styles.css --watch=always
-              '';
-            };
+            scripts =
+              {
+                # User scripts
+                init.exec = ''
+                  mkdir .app
+                  ${pkgs.elmPackages.elm-land}/bin/elm-land init .app
+                  cat .app/.gitignore >> .gitignore
+                  rm .app/.gitignore
+                  mv .app/{.*,*} .
+                  rmdir .app
+                '';
+                start.exec = ''
+                  parallel ::: elm-land-server tailwindcss-watcher
+                '';
+              }
+              // {
+                # Auxiliary scripts
+                elm-land-server.exec = ''
+                  elm-land server
+                '';
+                tailwindcss-watcher.exec = ''
+                  tailwindcss -i ./tailwind.css -o ./public/styles.css --watch=always
+                '';
+              };
           })
         ];
       };
