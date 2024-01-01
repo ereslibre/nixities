@@ -1,2 +1,6 @@
-run:
-  nix run .#microvms.x86_64-linux.host.aarch64-linux.guest.config.microvm.declaredRunner
+run: (run-arch "$(nix eval --impure --raw --expr 'builtins.currentSystem')")
+
+run-aarch64: (run-arch "aarch64-linux")
+
+run-arch guest:
+  nix run .#microvms.$(nix eval --impure --raw --expr 'builtins.currentSystem').host.{{guest}}.guest.config.microvm.declaredRunner

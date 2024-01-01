@@ -204,11 +204,11 @@
         };
         jupyter = {
           path = ./devenv/templates/jupyter;
-          description = "Jupyter notebook integration nixity";
+          description = "Jupyter notebook";
         };
         microvm = {
           path = ./devenv/templates/microvm;
-          description = "MicroVM";
+          description = "Micro VM";
         };
         nixity = {
           path = ./devenv/templates/nixity;
