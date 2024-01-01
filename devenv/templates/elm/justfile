@@ -2,4 +2,4 @@ all: build
 
 build:
   elm-land build
-  tailwind -i tailwind.css -o dist/assets/style.css
+  tailwindcss -i tailwind.css -o dist/assets/style.css
