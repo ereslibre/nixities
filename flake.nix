@@ -206,6 +206,10 @@
           path = ./devenv/templates/jupyter;
           description = "Jupyter notebook integration nixity";
         };
+        nixos-container = {
+          path = ./devenv/templates/nixos-container;
+          description = "NixOS container";
+        };
         python = {
           path = ./devenv/templates/python;
           description = "Python project";

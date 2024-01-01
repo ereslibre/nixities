@@ -1,0 +1,2 @@
+build target:
+  nix build .#nixosConfigurations.container.{{target}}.config.system.build.toplevel
