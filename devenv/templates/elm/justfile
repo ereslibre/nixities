@@ -1,0 +1,13 @@
+all: fmt lint build test
+
+fmt:
+  echo "Format"
+
+lint:
+  echo "Lint"
+
+build:
+  echo "Build"
+
+test:
+  echo "Test"

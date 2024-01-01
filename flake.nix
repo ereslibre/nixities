@@ -198,6 +198,10 @@
     })
     // {
       templates = rec {
+        elm = {
+          path = ./devenv/templates/elm;
+          description = "Elm project";
+        };
         haskell = {
           path = ./devenv/templates/haskell;
           description = "Haskell project";
