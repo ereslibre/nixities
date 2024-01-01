@@ -1,13 +1,5 @@
-all: fmt lint build test
-
-fmt:
-  echo "Format"
-
-lint:
-  echo "Lint"
+all: build
 
 build:
-  echo "Build"
-
-test:
-  echo "Test"
+  elm-land build
+  tailwind -i tailwind.css -o dist/assets/style.css
