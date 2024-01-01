@@ -1,5 +1,5 @@
 {
-  description = "NixOS container";
+  description = "OCI container";
 
   inputs = {
     devenv.url = "github:cachix/devenv";
