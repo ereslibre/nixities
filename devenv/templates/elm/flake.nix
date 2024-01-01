@@ -65,7 +65,7 @@
                   elm-land server
                 '';
                 tailwindcss-watcher.exec = ''
-                  tailwindcss -i ./tailwind.css -o ./static/styles.css --watch=always
+                  tailwindcss -i ./tailwind.css -o ./static/style.css --watch=always
                 '';
               };
           })
