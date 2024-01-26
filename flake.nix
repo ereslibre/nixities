@@ -45,7 +45,11 @@
           (name: nixosDefinition: nixosDefinition.config.microvm.declaredRunner)
           self.outputs.nixosConfigurations.${system}.vms;
       };
-      legacyPackages = pkgs;
+      legacyPackages =
+        pkgs
+        // {
+          inherit pkgs-cuda;
+        };
       devShells = {
         default = self.devShells.${system}.nix;
         languages = {
