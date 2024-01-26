@@ -1,4 +1,4 @@
 {llama-cpp}:
 llama-cpp.override {
-  openblasSupport = false;
+  cudaSupport = true;
 }
