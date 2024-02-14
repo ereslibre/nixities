@@ -39,7 +39,7 @@
               package = pythonPackages.python;
             };
             packages =
-              (with pkgs; [just stdenv.cc.cc.lib])
+              (with pkgs; [alejandra just stdenv.cc.cc.lib])
               ++ (with pythonPackages; [
                 pip
               ]);

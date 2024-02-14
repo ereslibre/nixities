@@ -1,4 +1,7 @@
-all: build
+all: fmt build
+
+fmt:
+  find . -name "*.nix" | xargs alejandra
 
 build:
   elm-land build

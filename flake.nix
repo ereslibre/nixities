@@ -202,6 +202,10 @@
           path = ./devenv/templates/elm;
           description = "Elm project";
         };
+        go = {
+          path = ./devenv/templates/go;
+          description = "Go project";
+        };
         haskell = {
           path = ./devenv/templates/haskell;
           description = "Haskell project";

@@ -1,0 +1,11 @@
+all: fmt build test
+
+fmt:
+  find . -name "*.nix" | xargs alejandra
+  go fmt ./...
+
+build:
+  go build ./...
+
+test:
+  go test ./...

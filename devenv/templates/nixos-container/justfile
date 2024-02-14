@@ -1,2 +1,5 @@
 build target:
   nix build .#nixosConfigurations.container.{{target}}.config.system.build.toplevel
+
+fmt:
+  find . -name "*.nix" | xargs alejandra

@@ -6,3 +6,6 @@ load: build
 
 build-for target:
   nix build .#packages.{{target}}.default
+
+fmt:
+  find . -name "*.nix" | xargs alejandra

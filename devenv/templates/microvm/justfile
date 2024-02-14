@@ -4,3 +4,6 @@ run-aarch64: (run-arch "aarch64-linux")
 
 run-arch guest:
   nix run .#microvms.$(nix eval --impure --raw --expr 'builtins.currentSystem').{{guest}}.microvm.config.microvm.declaredRunner
+
+fmt:
+  find . -name "*.nix" | xargs alejandra

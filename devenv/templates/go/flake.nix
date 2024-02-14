@@ -1,5 +1,5 @@
 {
-  description = "Nixity";
+  description = "Rust nixity";
 
   inputs = {
     devenv.url = "github:cachix/devenv";
@@ -24,16 +24,14 @@
         inherit pkgs;
         inputs.nixpkgs = nixities.nixpkgs;
         modules = [
-          ({pkgs, ...}: {
-            # https://devenv.sh/reference/options/
-            packages = with pkgs; [alejandra just];
-            # languages.cplusplus.enable = true;
-            # pre-commit.hooks = {
-            #   clang-format.enable = true;
-            # };
-            # enterShell = ''
-            #   hello
-            # '';
+          ({
+            pkgs,
+            lib,
+            ...
+          }: {
+            languages.go.enable = true;
+            packages = with pkgs; [alejandra just openssl pkg-config];
+            pre-commit.hooks.gofmt.enable = true;
           })
         ];
       };

@@ -38,7 +38,7 @@
             packages =
               # We require these binaries to interact with their CLI
               (with pkgs.elmPackages; [elm-land elm-review elm-test])
-              ++ (with pkgs; [just tailwindcss tailwindcss-language-server parallel]);
+              ++ (with pkgs; [alejandra just tailwindcss tailwindcss-language-server parallel]);
             pre-commit.hooks = {
               elm-format.enable = true;
               elm-review.enable = false;

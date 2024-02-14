@@ -24,7 +24,7 @@
         inputs.nixpkgs = nixities.nixpkgs;
         modules = [
           ({pkgs, ...}: {
-            packages = with pkgs; [just];
+            packages = with pkgs; [alejandra just];
             enterShell = ''
               cat <<"EOF" | ${pkgs.bat}/bin/bat --decorations=never --language=markdown
               # Instructions

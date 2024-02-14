@@ -29,7 +29,7 @@
         inputs.nixpkgs = nixities.nixpkgs;
         modules = [
           ({pkgs, ...}: {
-            packages = with pkgs; [just];
+            packages = with pkgs; [alejandra just];
           })
         ];
       };
