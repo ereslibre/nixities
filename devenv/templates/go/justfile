@@ -1,4 +1,4 @@
-all: fmt build test
+default: fmt build test
 
 fmt:
   find . -name "*.nix" | xargs alejandra
