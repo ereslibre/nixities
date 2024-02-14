@@ -29,8 +29,11 @@
             lib,
             ...
           }: {
-            languages.rust.enable = true;
-            packages = with pkgs; [just];
+            languages = {
+              c.enable = true;
+              rust.enable = true;
+            };
+            packages = with pkgs; [just openssl pkg-config];
             pre-commit.hooks = {
               rustfmt.enable = true;
               clippy.enable = true;
