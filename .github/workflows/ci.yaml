@@ -18,5 +18,5 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v2
       - name: Format
         run: |
-          make fmt
+          just fmt
           git diff --exit-code
