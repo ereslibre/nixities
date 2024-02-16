@@ -16,6 +16,10 @@
   } @ inputs: let
     eachSystem = nixities.nixpkgs.lib.genAttrs (import systems);
   in {
+    # Fix issue with devenv-up missing with flakes: https://github.com/cachix/devenv/issues/756
+    packages = eachSystem (system: {
+      devenv-up = self.devShells.${system}.default.config.procfileScript;
+    });
     devShells = eachSystem (system: let
       pkgs = import nixities.nixpkgs {inherit system;};
     in {

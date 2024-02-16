@@ -43,6 +43,8 @@
     });
 
     packages = eachSystem (system: let
+      # Fix issue with devenv-up missing with flakes: https://github.com/cachix/devenv/issues/756
+      devenv-up = self.devShells.${system}.default.config.procfileScript;
       jupyterlab = jupyenv.lib.${system}.mkJupyterlabNew ({...}: {
         inherit (nixities) nixpkgs;
         imports = [
