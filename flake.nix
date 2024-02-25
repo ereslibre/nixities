@@ -50,7 +50,6 @@
         default = self.devShells.${system}.nix;
         languages = {
           generic = pkgs.callPackage ./shells/languages/generic {inherit devGenericTools;};
-          python3 = pkgs.callPackage ./shells/languages/python3 {};
         };
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra just];};
         onnx = pkgs.callPackage ./shells/onnx {};
@@ -229,14 +228,6 @@
         oci-container = {
           path = ./devenv/templates/oci-container;
           description = "OCI container";
-        };
-        python = {
-          path = ./devenv/templates/python;
-          description = "Python project";
-        };
-        python-venv = {
-          path = ./devenv/templates/python-venv;
-          description = "Python project (with venv)";
         };
         rust = {
           path = ./devenv/templates/rust;
