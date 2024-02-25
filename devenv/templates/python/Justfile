@@ -1,0 +1,2 @@
+fmt:
+  find . -name "*.nix" | xargs nix develop --impure --command alejandra

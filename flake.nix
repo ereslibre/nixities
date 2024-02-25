@@ -52,7 +52,6 @@
           generic = pkgs.callPackage ./shells/languages/generic {inherit devGenericTools;};
         };
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra just];};
-        onnx = pkgs.callPackage ./shells/onnx {};
         wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
           inherit allWasmTools;
           wasi-sdk = self.packages.${system}.wasi-sdk-19;
@@ -228,6 +227,10 @@
         oci-container = {
           path = ./devenv/templates/oci-container;
           description = "OCI container";
+        };
+        python = {
+          path = ./devenv/templates/python;
+          description = "Python project";
         };
         rust = {
           path = ./devenv/templates/rust;

@@ -23,7 +23,6 @@
     devShells = eachSystem (system: let
       pkgs = import nixities.nixpkgs {inherit system;};
     in {
-      # The default devShell
       default = devenv.lib.mkShell {
         inherit pkgs;
         inputs.nixpkgs = nixities.nixpkgs;

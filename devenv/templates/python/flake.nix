@@ -1,5 +1,5 @@
 {
-  description = "Nixity";
+  description = "Python nixity";
 
   inputs = {
     devenv.url = "github:cachix/devenv";
@@ -14,35 +14,40 @@
     systems,
     ...
   } @ inputs: let
-    eachSystem = nixities.nixpkgs.lib.genAttrs (import systems);
+    forEachSystem = nixities.nixpkgs.lib.genAttrs (import systems);
   in {
     # Fix issue with devenv-up missing with flakes: https://github.com/cachix/devenv/issues/756
-    packages = eachSystem (system: {
+    packages = forEachSystem (system: {
       devenv-up = self.devShells.${system}.default.config.procfileScript;
     });
-    devShells = eachSystem (system: let
+    devShells = forEachSystem (system: let
       pkgs = import nixities.nixpkgs {inherit system;};
     in {
       default = devenv.lib.mkShell {
         inherit pkgs;
         inputs.nixpkgs = nixities.nixpkgs;
         modules = [
-          ({pkgs, ...}: {
-            # https://devenv.sh/reference/options/
+          ({
+            pkgs,
+            lib,
+            ...
+          }: {
+            languages.python = {
+              enable = true;
+              poetry = {
+                enable = true;
+                activate.enable = true;
+                install = {
+                  enable = true;
+                  allExtras = true;
+                  installRootPackage = true;
+                };
+              };
+            };
             packages = with pkgs; [alejandra just];
-            # languages.cplusplus.enable = true;
-            # pre-commit.hooks = {
-            #   clang-format.enable = true;
-            # };
-            # enterShell = ''
-            #   hello
-            # '';
           })
         ];
       };
-      # Example of another devShell directly forwarded from the
-      # devShells that nixities exposes
-      # inherit (nixities.devShells.${system}) wasm;
     });
   };
 }
