@@ -209,26 +209,6 @@
           path = ./devenv/templates/haskell;
           description = "Haskell project";
         };
-        jupyter = {
-          path = ./devenv/templates/jupyter;
-          description = "Jupyter notebook";
-        };
-        microvm = {
-          path = ./devenv/templates/microvm;
-          description = "Micro VM";
-        };
-        nixity = {
-          path = ./devenv/templates/nixity;
-          description = "Generic nixity";
-        };
-        nixos-container = {
-          path = ./devenv/templates/nixos-container;
-          description = "NixOS container";
-        };
-        oci-container = {
-          path = ./devenv/templates/oci-container;
-          description = "OCI container";
-        };
         python = {
           path = ./devenv/templates/python;
           description = "Python project";
@@ -237,7 +217,6 @@
           path = ./devenv/templates/rust;
           description = "Rust project";
         };
-        default = nixity;
       };
     }
     // {inherit nixpkgs;};

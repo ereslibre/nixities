@@ -1,8 +1,0 @@
-default:
-  @just --list
-
-fmt:
-  find . -name "*.nix" | xargs alejandra
-
-start:
-  start-notebook

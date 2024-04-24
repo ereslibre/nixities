@@ -1,6 +1,10 @@
-{ pkgs, lib, config, inputs, ... }:
-
 {
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}: {
   env = {
     # `elm-land server` uses this envvar for setting up
     # its listener
@@ -24,24 +28,24 @@
     {
       # User scripts
       init.exec = ''
-                  mkdir .app
-                  ${pkgs.elmPackages.elm-land}/bin/elm-land init .app
-                  cat .app/.gitignore >> .gitignore
-                  rm .app/.gitignore
-                  mv .app/{.*,*} .
-                  rmdir .app
-                '';
+        mkdir .app
+        ${pkgs.elmPackages.elm-land}/bin/elm-land init .app
+        cat .app/.gitignore >> .gitignore
+        rm .app/.gitignore
+        mv .app/{.*,*} .
+        rmdir .app
+      '';
       start.exec = ''
-                  parallel ::: elm-land-server tailwindcss-watcher
-                '';
+        parallel ::: elm-land-server tailwindcss-watcher
+      '';
     }
     // {
       # Auxiliary scripts
       elm-land-server.exec = ''
-                  elm-land server
-                '';
+        elm-land server
+      '';
       tailwindcss-watcher.exec = ''
-                  tailwindcss -i ./tailwind.css -o ./static/style.css --watch=always
-                '';
+        tailwindcss -i ./tailwind.css -o ./static/style.css --watch=always
+      '';
     };
 }
