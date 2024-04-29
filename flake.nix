@@ -220,6 +220,10 @@
           path = ./devenv/templates/rust;
           description = "Rust project";
         };
+        webapp = {
+          path = ./devenv/templates/webapp;
+          description = "Web app project";
+        };
       };
     }
     // {inherit nixpkgs;};
