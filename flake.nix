@@ -52,6 +52,9 @@
         languages = {
           generic = pkgs.callPackage ./shells/languages/generic {inherit devGenericTools;};
         };
+        misc = {
+          demo-magic = pkgs.callPackage ./shells/misc/demo-magic {};
+        };
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra just];};
         wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
           inherit allWasmTools;
