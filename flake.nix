@@ -221,5 +221,9 @@
           description = "Web app project";
         };
       };
+    }
+    // {
+      # Used by helpers such as ,,,
+      inherit nixpkgs;
     };
 }
