@@ -57,7 +57,7 @@
   '';
 
   processes = {
-    elm-start.exec = "cd frontend && elm-land server";
+    frontend.exec = "cd frontend && elm-land server";
     tailwindcss-watcher.exec = "tailwindcss -i ./frontend/tailwind.css -o ./frontend/static/style.css --watch=always";
   };
 
