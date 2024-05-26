@@ -153,6 +153,17 @@
             {
               microvm = {
                 cpu = "cortex-a72";
+                vcpu = 128;
+                mem = 131072;
+                shares = [];
+                writableStoreOverlay = "/nix/.rw-store";
+                volumes = [
+                  {
+                    image = "nix-store-overlay.img";
+                    mountPoint = "/nix/.rw-store";
+                    size = 262144;
+                  }
+                ];
                 interfaces = [
                   {
                     type = "user";
@@ -185,7 +196,7 @@
                     - User: $(whoami)
                   EOF
                 '';
-                systemPackages = devGenericTools;
+                systemPackages = with pkgs; [git];
               };
               services.getty.autologinUser = "root";
               system.stateVersion = "23.05";
