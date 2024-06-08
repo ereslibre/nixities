@@ -1,6 +1,5 @@
 {
   mkShell,
-  stdenv,
   ninja,
   cmake,
   llvmPackages_16,

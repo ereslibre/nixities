@@ -48,9 +48,6 @@
         languages = {
           generic = pkgs.callPackage ./shells/languages/generic {inherit devGenericTools;};
         };
-        misc = {
-          demo-magic = pkgs.callPackage ./shells/misc/demo-magic {};
-        };
         nix = pkgs.mkShell {buildInputs = with pkgs; [alejandra just];};
         wasi-sdk-19 = pkgs.callPackage ./shells/wasi-sdk {
           inherit allWasmTools;
@@ -61,25 +58,10 @@
           wasi-sdk = self.packages.${system}.wasi-sdk-20;
         };
         wasm = pkgs.callPackage ./shells/wasm {inherit allWasmTools;};
-        work = {
-          mod-wasm = pkgs.callPackage ./shells/work/mod-wasm {};
-          wasm-labs = pkgs.callPackage ./shells/work/wasm-labs {};
-          wws = pkgs.callPackage ./shells/work/wws {};
-          php = {
-            native = pkgs.callPackage ./shells/work/php {};
-            wasi-sdk-19 = pkgs.callPackage ./shells/work/php.wasi {
-              inherit allWasmTools;
-              wasi-sdk = self.packages.${system}.wasi-sdk-19;
-            };
-            wasi-sdk-20 = pkgs.callPackage ./shells/work/php.wasi {
-              inherit allWasmTools;
-              wasi-sdk = self.packages.${system}.wasi-sdk-20;
-            };
-          };
-        };
         upstream = {
           containerd-wasm-shims = pkgs.callPackage ./shells/upstream/containerd-wasm-shims {};
           elm = pkgs.callPackage ./shells/upstream/elm {};
+          ghc = pkgs.callPackage ./shells/upstream/ghc {};
           rustc = pkgs.callPackage ./shells/upstream/rustc {inherit devGenericTools;};
           wasi-libc =
             pkgs.callPackage ./shells/upstream/wasi-libc {inherit allWasmTools;};

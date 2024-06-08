@@ -1,6 +1,5 @@
 {
   mkShell,
-  pkgsLLVM,
   allWasmTools,
   llvmPackages_16,
 }: let

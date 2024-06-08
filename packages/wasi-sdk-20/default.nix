@@ -6,7 +6,7 @@
   pname = "wasi-sdk";
   version = "20";
 in
-  pkgs.stdenv.mkDerivation {
+  stdenv.mkDerivation {
     inherit pname version;
 
     sourceRoot = "${pname}-${version}.0";
