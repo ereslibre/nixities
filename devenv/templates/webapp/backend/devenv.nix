@@ -1,5 +1,5 @@
-{ pkgs, ... }: let
-  databasePath  = "db/core.sqlite3";
+{pkgs, ...}: let
+  databasePath = "db/core.sqlite3";
 in {
   env = {
     DATABASE_URL = "sqlite:${databasePath}";
@@ -9,12 +9,11 @@ in {
     mkdir -p backend/db
   '';
 
-  packages = with pkgs;
-    [
-      openssl.dev
-      sqlite
-      sqlx-cli
-    ];
+  packages = with pkgs; [
+    openssl.dev
+    sqlite
+    sqlx-cli
+  ];
 
   processes = {
     backend.exec = "cd backend && sqlx database create --database-url=sqlite:${databasePath} && sqlx migrate run --database-url=sqlite:${databasePath} --source=migrations && cargo run";

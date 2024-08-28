@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   env = {
     # `elm-land server` uses this envvar for setting up
     # its listener
@@ -8,17 +8,15 @@
   languages.elm.enable = true;
 
   packages =
-    (with pkgs.elmPackages;
-      [
-        elm-land
-        elm-review
-        elm-test
-      ]) ++
-    (with pkgs;
-      [
-        tailwindcss
-        tailwindcss-language-server
-      ]);
+    (with pkgs.elmPackages; [
+      elm-land
+      elm-review
+      elm-test
+    ])
+    ++ (with pkgs; [
+      tailwindcss
+      tailwindcss-language-server
+    ]);
 
   pre-commit.hooks = {
     elm-format.enable = true;
