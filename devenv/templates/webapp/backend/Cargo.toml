@@ -1,0 +1,12 @@
+[package]
+name = "backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+axum = "0.7"
+serde = { version = "1.0", features = ["derive"] }
+sqlx = { version = "0.7", features = ["macros", "migrate", "runtime-tokio", "sqlite"] }
+tokio = { version = "1.0", features = ["full"] }
+tracing-subscriber = "0.3"
