@@ -1,3 +1,5 @@
+mod db;
+
 use axum::{
     extract::State,
     http::StatusCode,
@@ -7,18 +9,22 @@ use axum::{
 };
 use chrono::{DateTime, Utc};
 use core::result::Result;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use sqlx::SqlitePool;
 use std::env;
 
-#[derive(Clone, Debug)]
-struct BackendError();
+use db::{identify_database_error, DatabaseError};
+
+#[derive(Debug, Serialize)]
+enum BackendError {
+    DatabaseError,
+}
 
 impl IntoResponse for BackendError {
     fn into_response(self) -> Response {
         (
             StatusCode::INTERNAL_SERVER_ERROR,
-            String::from("Something went wrong"),
+            String::from("Something unexpected happened"),
         )
             .into_response()
     }
@@ -65,15 +71,36 @@ async fn list_users(State(pool): State<SqlitePool>) -> Result<Json<Vec<v1::User>
 }
 
 impl From<sqlx::Error> for BackendError {
-    fn from(_: sqlx::Error) -> Self {
-        BackendError()
+    fn from(_err: sqlx::Error) -> Self {
+        BackendError::DatabaseError
+    }
+}
+
+#[derive(Serialize)]
+enum CreateUserResponse {
+    User(v1::User),
+    BadRequest,
+    BackendError(BackendError),
+}
+
+impl IntoResponse for CreateUserResponse {
+    fn into_response(self) -> Response {
+        match self {
+            CreateUserResponse::User(user) => (StatusCode::CREATED, Json(user)).into_response(),
+            CreateUserResponse::BadRequest => {
+                (StatusCode::BAD_REQUEST, axum::body::Body::empty()).into_response()
+            }
+            CreateUserResponse::BackendError(_) => {
+                (StatusCode::INTERNAL_SERVER_ERROR, axum::body::Body::empty()).into_response()
+            }
+        }
     }
 }
 
 async fn create_user(
     State(pool): State<SqlitePool>,
     Json(payload): Json<CreateUser>,
-) -> (StatusCode, Json<v1::User>) {
+) -> impl IntoResponse {
     let user = User {
         id: uuid::Uuid::new_v4().as_simple().to_string(),
         username: payload.username,
@@ -82,21 +109,26 @@ async fn create_user(
         deleted_at: None,
     };
 
-    if let Err(_err) = sqlx::query("INSERT INTO users(id, username, created_at) VALUES (?, ?, ?)")
+    if let Err(err) = sqlx::query("INSERT INTO users(id, username, created_at) VALUES (?, ?, ?)")
         .bind(&user.id)
         .bind(&user.username)
         .bind(user.created_at.timestamp())
         .execute(&pool)
         .await
     {
-        // FIXME: do not return a default user, but an empty response instead
-        return (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            Json(User::default().into()),
-        );
+        if let Some(database_error) = err.as_database_error() {
+            match identify_database_error(database_error) {
+                DatabaseError::UniqueConstraintFailed => return CreateUserResponse::BadRequest,
+                DatabaseError::Other => {
+                    return CreateUserResponse::BackendError(BackendError::DatabaseError)
+                }
+            }
+        }
+
+        return CreateUserResponse::BackendError(BackendError::DatabaseError);
     }
 
-    (StatusCode::CREATED, Json(user.into()))
+    CreateUserResponse::User(user.into())
 }
 
 #[derive(Deserialize)]
