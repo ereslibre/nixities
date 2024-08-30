@@ -5,8 +5,6 @@
   inputs,
   ...
 }: {
-  packages = with pkgs; [alejandra just];
-
   enterShell = ''
     cat <<'EOF' | ${pkgs.bat}/bin/bat --language=markdown
       # Welcome to a new webapp!
@@ -21,4 +19,10 @@
       Now, you can start the devenv environment: `devenv up`.
     EOF
   '';
+
+  packages = with pkgs; [alejandra just];
+
+  processes = {
+    backend.exec = "cd backend && db-setup && cargo run";
+  };
 }

@@ -5,18 +5,15 @@ in {
     DATABASE_URL = "sqlite:${databasePath}";
   };
 
-  enterShell = ''
-    mkdir -p backend/db
-  '';
-
   packages = with pkgs; [
     openssl.dev
     sqlite
     sqlx-cli
   ];
 
-  processes = {
-    backend.exec = "cd backend && sqlx database create --database-url=sqlite:${databasePath} && sqlx migrate run --database-url=sqlite:${databasePath} --source=migrations && cargo run";
+  scripts = {
+    db-setup.exec = "sqlx database setup --database-url=sqlite:${databasePath} --source=migrations";
+    db-migrate.exec = "sqlx migrate run --database-url=sqlite:${databasePath} --source=migrations";
   };
 
   services.postgres.enable = true;

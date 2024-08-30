@@ -5,8 +5,9 @@ use axum::{
     routing::{get, post},
     Json, Router,
 };
+use chrono::{DateTime, Utc};
 use core::result::Result;
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use sqlx::SqlitePool;
 use std::env;
 
@@ -32,8 +33,8 @@ async fn main() -> Result<(), BackendError> {
         .expect("could not connect to database");
 
     let app = Router::new()
-        .route("/", get(root))
-        .route("/user", post(create_user))
+        .route("/users", get(list_users))
+        .route("/users", post(create_user))
         .with_state(pool);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
@@ -46,22 +47,21 @@ async fn main() -> Result<(), BackendError> {
     Ok(())
 }
 
-async fn root(State(pool): State<SqlitePool>) -> Result<String, BackendError> {
-    let recs = sqlx::query!(
-        r#"
-SELECT id, name
-FROM samples
-ORDER BY id
-        "#
-    )
-    .fetch_all(&pool)
-    .await?;
+async fn list_users(State(pool): State<SqlitePool>) -> Result<Json<Vec<v1::User>>, BackendError> {
+    let users = sqlx::query!("SELECT id, username FROM users ORDER BY created_at")
+        .fetch_all(&pool)
+        .await?;
 
-    for rec in recs {
-        println!("- [{}] {}", rec.id, &rec.name,);
+    let mut result: Vec<v1::User> = Vec::new();
+
+    for user in users {
+        result.push(v1::User {
+            id: user.id,
+            username: user.username,
+        })
     }
 
-    Ok(String::from("Hello, world!"))
+    Ok(Json(result))
 }
 
 impl From<sqlx::Error> for BackendError {
@@ -70,13 +70,33 @@ impl From<sqlx::Error> for BackendError {
     }
 }
 
-async fn create_user(Json(payload): Json<CreateUser>) -> (StatusCode, Json<User>) {
+async fn create_user(
+    State(pool): State<SqlitePool>,
+    Json(payload): Json<CreateUser>,
+) -> (StatusCode, Json<v1::User>) {
     let user = User {
-        id: 1337,
+        id: uuid::Uuid::new_v4().as_simple().to_string(),
         username: payload.username,
+        created_at: Utc::now(),
+        updated_at: None,
+        deleted_at: None,
     };
 
-    (StatusCode::CREATED, Json(user))
+    if let Err(_err) = sqlx::query("INSERT INTO users(id, username, created_at) VALUES (?, ?, ?)")
+        .bind(&user.id)
+        .bind(&user.username)
+        .bind(user.created_at.timestamp())
+        .execute(&pool)
+        .await
+    {
+        // FIXME: do not return a default user, but an empty response instead
+        return (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            Json(User::default().into()),
+        );
+    }
+
+    (StatusCode::CREATED, Json(user.into()))
 }
 
 #[derive(Deserialize)]
@@ -84,8 +104,31 @@ struct CreateUser {
     username: String,
 }
 
-#[derive(Serialize)]
+#[derive(Default)]
 struct User {
-    id: u64,
+    id: String,
     username: String,
+    created_at: DateTime<Utc>,
+    updated_at: Option<DateTime<Utc>>,
+    deleted_at: Option<DateTime<Utc>>,
+}
+
+mod v1 {
+
+    use serde::Serialize;
+
+    #[derive(Serialize)]
+    pub struct User {
+        pub id: String,
+        pub username: String,
+    }
+
+    impl From<super::User> for User {
+        fn from(user: super::User) -> Self {
+            Self {
+                id: user.id,
+                username: user.username,
+            }
+        }
+    }
 }
