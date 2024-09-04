@@ -1,3 +1,4 @@
 fmt:
+    find . -maxdepth 1 -name "*.nix" | xargs alejandra
     just backend/fmt
     just frontend/fmt

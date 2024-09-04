@@ -49,7 +49,7 @@
                 EOF
               '';
 
-              packages = with pkgs; [alejandra just];
+              packages = with pkgs; [alejandra findutils just];
 
               processes = {
                 backend.exec = "cd backend && db-setup && cargo run";
