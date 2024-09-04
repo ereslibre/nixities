@@ -15,6 +15,4 @@ in {
     db-setup.exec = "sqlx database setup --database-url=sqlite:${databasePath} --source=migrations";
     db-migrate.exec = "sqlx migrate run --database-url=sqlite:${databasePath} --source=migrations";
   };
-
-  services.postgres.enable = true;
 }
