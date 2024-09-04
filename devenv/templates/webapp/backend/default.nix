@@ -11,6 +11,8 @@ in {
     sqlx-cli
   ];
 
+  pre-commit.hooks.rustfmt.enable = true;
+
   scripts = {
     db-setup.exec = "sqlx database setup --database-url=sqlite:${databasePath} --source=migrations";
     db-migrate.exec = "sqlx migrate run --database-url=sqlite:${databasePath} --source=migrations";

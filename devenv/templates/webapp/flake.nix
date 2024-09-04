@@ -51,6 +51,8 @@
 
               packages = with pkgs; [alejandra findutils just];
 
+              pre-commit.hooks.alejandra.enable = true;
+
               processes = {
                 backend.exec = "cd backend && db-setup && cargo run";
               };
