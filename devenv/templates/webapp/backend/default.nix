@@ -15,6 +15,10 @@ in {
 
   pre-commit.hooks.rustfmt.enable = true;
 
+  processes = {
+    backend.exec = "cd backend && db-setup && cargo run";
+  };
+
   scripts = {
     db-setup.exec = "sqlx database setup --database-url=sqlite:${databasePath} --source=migrations";
     db-migrate.exec = "sqlx migrate run --database-url=sqlite:${databasePath} --source=migrations";

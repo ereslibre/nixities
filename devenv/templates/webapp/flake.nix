@@ -31,9 +31,11 @@
       in {
         default = devenv.lib.mkShell {
           inherit inputs pkgs;
+
           modules = [
-            {imports = [./backend ./frontend];}
             {
+              imports = [./backend ./frontend];
+
               enterShell = ''
                 cat <<'EOF' | ${pkgs.bat}/bin/bat --language=markdown
                   # Welcome to a new webapp!
@@ -52,10 +54,6 @@
               packages = with pkgs; [alejandra findutils just];
 
               pre-commit.hooks.alejandra.enable = true;
-
-              processes = {
-                backend.exec = "cd backend && db-setup && cargo run";
-              };
             }
           ];
         };
