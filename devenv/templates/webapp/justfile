@@ -1,0 +1,3 @@
+fmt:
+    just backend/fmt
+    just frontend/fmt
