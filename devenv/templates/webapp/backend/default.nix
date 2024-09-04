@@ -5,6 +5,8 @@ in {
     DATABASE_URL = "sqlite:${databasePath}";
   };
 
+  languages.rust.enable = true;
+
   packages = with pkgs; [
     openssl.dev
     sqlite
