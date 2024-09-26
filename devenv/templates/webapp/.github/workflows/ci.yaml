@@ -18,7 +18,7 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: Format
         run: |
-          nix develop --command just fmt
+          nix develop --impure --command just fmt
           git diff --exit-code
   flake-check:
     name: Flake Check
@@ -26,5 +26,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Check Nix flake inputs
+      - name: Check Nix flake inpix-instuts
         uses: DeterminateSystems/flake-checker-action@v9
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v14
+      - name: Setup the magic Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v8
+      - name: Build
+        run: |
+          nix build
