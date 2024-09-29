@@ -1,3 +1,9 @@
 fmt:
     find . -name "*.nix" | xargs alejandra
     cargo fmt
+
+build profile="":
+    cargo build {{profile}}
+
+update-sqlx:
+    cargo sqlx prepare --workspace

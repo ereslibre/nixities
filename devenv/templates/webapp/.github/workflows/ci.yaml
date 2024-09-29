@@ -26,8 +26,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Check Nix flake inpix-instuts
-        uses: DeterminateSystems/flake-checker-action@v9
+      - name: Check Nix flake inputs
+        uses: DeterminateSystems/flake-checker-action@v8
   build:
     name: Build
     runs-on: ubuntu-latest

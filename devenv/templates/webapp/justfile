@@ -2,3 +2,6 @@ fmt:
     find . -maxdepth 1 -name "*.nix" | xargs alejandra
     just backend/fmt
     just frontend/fmt
+
+build component="all":
+    nix build {{ if component == "all" { "." } else { ".#" + component } }}

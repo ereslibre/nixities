@@ -1,8 +1,8 @@
 {pkgs, ...}: let
-  databasePath = "db/core.sqlite3";
+  databaseURL = "sqlite://db/core.sqlite3";
 in {
   env = {
-    DATABASE_URL = "sqlite:${databasePath}";
+    DATABASE_URL = databaseURL;
   };
 
   languages.rust.enable = true;
@@ -13,14 +13,17 @@ in {
     sqlx-cli
   ];
 
-  pre-commit.hooks.rustfmt.enable = true;
+  pre-commit = {
+    hooks.rustfmt.enable = true;
+    settings.rust.cargoManifestPath = "./backend/Cargo.toml";
+  };
 
   processes = {
     backend.exec = "cd backend && db-setup && cargo run";
   };
 
   scripts = {
-    db-setup.exec = "sqlx database setup --database-url=sqlite:${databasePath} --source=migrations";
-    db-migrate.exec = "sqlx migrate run --database-url=sqlite:${databasePath} --source=migrations";
+    db-setup.exec = "sqlx database setup --source=migrations";
+    db-migrate.exec = "sqlx migrate run --source=migrations";
   };
 }

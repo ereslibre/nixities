@@ -1,4 +1,5 @@
 mod db;
+mod version;
 
 use axum::{
     extract::State,
@@ -12,6 +13,7 @@ use core::result::Result;
 use serde::{Deserialize, Serialize};
 use sqlx::SqlitePool;
 use std::env;
+use tracing::info;
 
 use db::{identify_database_error, DatabaseError};
 
@@ -33,6 +35,11 @@ impl IntoResponse for BackendError {
 #[tokio::main]
 async fn main() -> Result<(), BackendError> {
     tracing_subscriber::fmt::init();
+
+    info!(
+        "Welcome to Backend (git revision {git_revision})",
+        git_revision = version::GIT_REVISION,
+    );
 
     let pool = SqlitePool::connect(&env::var("DATABASE_URL").expect("missing DATABASE_URL envvar"))
         .await
