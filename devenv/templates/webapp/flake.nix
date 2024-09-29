@@ -40,7 +40,7 @@
         overlays = [mkElmDerivation.overlays.mkElmDerivation];
         inherit system;
       };
-      databaseURL = "sqlite://app/db/core.sqlite3";
+      databaseURL = "sqlite:///app/db/core.sqlite3";
     in {
       backend = {
         autoStart = true;
