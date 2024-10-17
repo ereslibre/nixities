@@ -1,3 +1,5 @@
+defaultTarget := "x86_64-linux"
+
 fmt:
     find . -maxdepth 1 -name "*.nix" | xargs alejandra
     just backend/fmt
@@ -5,3 +7,9 @@ fmt:
 
 build component="all":
     nix build {{ if component == "all" { "." } else { ".#" + component } }}
+
+oci-container component="backend" target=defaultTarget:
+    nix build {{ ".#oci-containers." + target + "." + component }}
+
+load-oci-container component="backend" target=defaultTarget: (oci-container component target)
+    ./result | docker load
