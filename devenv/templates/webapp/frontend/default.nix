@@ -26,7 +26,7 @@
 
   processes = {
     frontend.exec = "cd frontend && ${pkgs.elmPackages.elm-land}/bin/elm-land server";
-    tailwindcss-watcher.exec = "${pkgs.tailwindcss}/bin/tailwindcss -i frontend/tailwind.css -o frontend/static/style.css --watch=always";
+    tailwindcss-watcher.exec = "${pkgs.tailwindcss}/bin/tailwindcss -c frontend/tailwind.config.js -i frontend/tailwind.css -o frontend/static/style.css --watch=always";
   };
 
   scripts = {
@@ -36,7 +36,8 @@
       ${pkgs.elmPackages.elm-land}/bin/elm-land init .app
       cat .app/.gitignore >> .gitignore
       rm .app/.gitignore
-      mv .app/{.*,*} .
+      mv -n .app/{.*,*} .
+      rm -f .app/elm-land.json
       rmdir .app
       mkdir static
       touch tailwind.css static/style.css
