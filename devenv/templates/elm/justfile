@@ -1,8 +1,0 @@
-default: fmt build
-
-fmt:
-  find . -name "*.nix" | xargs alejandra
-
-build:
-  elm-land build
-  tailwindcss -i tailwind.css -o static/style.css

@@ -4,3 +4,4 @@ fmt:
 
 build:
     elm-land build
+    tailwindcss -i tailwind.css -o static/style.css
