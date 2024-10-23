@@ -26,7 +26,7 @@
 
   processes = {
     frontend.exec = "cd frontend && ${pkgs.elmPackages.elm-land}/bin/elm-land server";
-    tailwindcss-watcher.exec = "${pkgs.tailwindcss}/bin/tailwindcss -c frontend/tailwind.config.js -i frontend/tailwind.css -o frontend/static/style.css --watch=always";
+    tailwindcss-watcher.exec = "cd frontend && ${pkgs.tailwindcss}/bin/tailwindcss -c tailwind.config.js -i tailwind.css -o static/style.css --watch=always";
   };
 
   scripts = {
