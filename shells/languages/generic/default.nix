@@ -1,10 +1,6 @@
 {
   mkShell,
-  autoconf,
-  automake,
-  clang,
-  cmake,
-  openssl,
+  pkgs,
   devGenericTools,
 }:
-mkShell {buildInputs = [autoconf automake clang cmake openssl] ++ devGenericTools;}
+mkShell {buildInputs = with pkgs; [autoconf automake clang cmake openssl] ++ devGenericTools;}

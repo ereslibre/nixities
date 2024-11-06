@@ -1,12 +1,8 @@
 {
   mkShell,
-  clang,
-  cmake,
-  ninja,
-  openssl,
-  python3,
+  pkgs,
   devGenericTools,
 }:
 mkShell {
-  buildInputs = [clang cmake ninja openssl python3] ++ devGenericTools;
+  buildInputs = with pkgs; [clang cmake ninja openssl python3] ++ devGenericTools;
 }

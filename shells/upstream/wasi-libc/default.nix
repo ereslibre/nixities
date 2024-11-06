@@ -1,9 +1,9 @@
 {
   mkShell,
+  pkgs,
   allWasmTools,
-  llvmPackages_16,
 }: let
-  llvmPackages = llvmPackages_16;
+  llvmPackages = pkgs.llvmPackages_16;
 in
   mkShell.override {inherit (llvmPackages) stdenv;} {
     nativeBuildInputs = allWasmTools;

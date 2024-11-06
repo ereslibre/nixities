@@ -1,20 +1,13 @@
 {
   mkShell,
-  ninja,
-  cmake,
-  llvmPackages_16,
-  binaryen,
-  libxml2,
-  wasmtime,
-  zlib,
-  bat,
+  pkgs,
 }:
 mkShell {
   NIX_HARDENING_ENABLE = "";
-  nativeBuildInputs = [ninja cmake llvmPackages_16.llvm.dev];
-  buildInputs = [binaryen libxml2 wasmtime zlib] ++ (with llvmPackages_16; [libclang lld llvm]);
+  nativeBuildInputs = with pkgs; [ninja cmake llvmPackages_16.llvm.dev];
+  buildInputs = with pkgs; [binaryen libxml2 wasmtime zlib] ++ (with pkgs.llvmPackages_16; [libclang lld llvm]);
   shellHook = ''
-    ${bat}/bin/bat --language=markdown --decorations=never <<"EOF"
+    ${pkgs.bat}/bin/bat --language=markdown --decorations=never <<"EOF"
     # Building Zig
 
     First, build the stage3 compiler. Recommended way:

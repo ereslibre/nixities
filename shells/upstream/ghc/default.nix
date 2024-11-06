@@ -1,16 +1,8 @@
 {
   mkShell,
-  alex,
-  autoconf,
-  automake,
-  cabal-install,
-  ghc,
-  gmp,
-  happy,
-  ncurses,
-  python3,
+  pkgs,
 }:
 mkShell {
   NIX_HARDENING_ENABLE = "";
-  buildInputs = [alex autoconf automake cabal-install ghc gmp happy ncurses python3];
+  buildInputs = with pkgs; [alex autoconf automake cabal-install ghc gmp happy ncurses python3];
 }

@@ -3,11 +3,9 @@
   mkShell,
   allWasmTools,
   stdenv,
-  darwin,
-  iconv,
-  openssl,
+  pkgs,
 }:
 mkShell {
   buildInputs = allWasmTools;
-  nativeBuildInputs = [openssl] ++ (lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [Security SystemConfiguration] ++ [iconv]));
+  nativeBuildInputs = with pkgs; [iconv openssl] ++ (lib.optionals stdenv.isDarwin (with pkgs.darwin.apple_sdk.frameworks; [Security SystemConfiguration]));
 }

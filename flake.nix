@@ -28,7 +28,7 @@
           cudaSupport = true;
         };
       };
-      wasmRuntimes = with pkgs; [wasmer wasmtime wavm];
+      wasmRuntimes = with pkgs; [wasmtime wavm];
       wasmGenericTools = with pkgs; [binaryen wabt wasm-tools];
       devGenericTools = with pkgs; [lldb pkg-config];
       allWasmTools = wasmGenericTools ++ wasmRuntimes ++ devGenericTools;
@@ -64,6 +64,7 @@
           ghc = pkgs.callPackage ./shells/upstream/ghc {};
           grace = pkgs.callPackage ./shells/upstream/grace {};
           rustc = pkgs.callPackage ./shells/upstream/rustc {inherit devGenericTools;};
+          servo = pkgs.callPackage ./shells/upstream/servo {inherit devGenericTools;};
           wasi-libc =
             pkgs.callPackage ./shells/upstream/wasi-libc {inherit allWasmTools;};
           wasi-vfs-19 = pkgs.callPackage ./shells/upstream/wasi-vfs {

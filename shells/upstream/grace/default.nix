@@ -1,9 +1,7 @@
 {
   mkShell,
-  cabal-install,
-  ghc,
-  zlib,
+  pkgs,
 }:
 mkShell {
-  buildInputs = [cabal-install ghc zlib];
+  buildInputs = with pkgs; [cabal-install ghc zlib];
 }

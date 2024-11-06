@@ -1,11 +1,11 @@
 {
   mkShell,
-  llvmPackages_latest,
   allWasmTools,
   wasi-sdk,
+  pkgs,
 }:
 mkShell {
-  buildInputs = [llvmPackages_latest.clang];
+  buildInputs = [pkgs.llvmPackages_latest.clang];
   nativeBuildInputs = allWasmTools;
   shellHook = ''
     export WASI_SDK_PATH=${wasi-sdk}
