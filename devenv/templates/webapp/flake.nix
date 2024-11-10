@@ -181,7 +181,9 @@
             {
               imports = [./backend ./frontend];
 
-              env.GIT_REVISION = "devenv";
+              env = {
+                GIT_REVISION = "devenv";
+              };
 
               enterShell = ''
                 cat <<'EOF' | ${pkgs.bat}/bin/bat --language=markdown
