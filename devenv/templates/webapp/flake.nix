@@ -33,6 +33,7 @@
             then self.dirtyRev
             else "local-filesystem"
           );
+      databaseURL = "sqlite:///app/db/core.sqlite3";
     };
   in {
     oci-containers = forEachSystem (system: let
@@ -40,13 +41,13 @@
         overlays = [mkElmDerivation.overlays.mkElmDerivation];
         inherit system;
       };
-      databaseURL = "sqlite:///app/db/core.sqlite3";
     in {
       backend = pkgs.dockerTools.streamLayeredImage {
         name = "followdat-link-backend";
         tag = "0.1";
         config = {
-          Cmd = "${self.packages.${system}.backend}/bin/backend";
+          Cmd = ["${self.packages.${system}.backend}/bin/backend"];
+          Env = ["DATABASE_URL=${project.databaseURL}"];
           ExposedPorts = {
             "3000/tcp" = {};
           };
@@ -59,7 +60,6 @@
         overlays = [mkElmDerivation.overlays.mkElmDerivation];
         inherit system;
       };
-      databaseURL = "sqlite:///app/db/core.sqlite3";
     in {
       backend = {
         autoStart = true;
@@ -78,7 +78,7 @@
             enable = true;
             wantedBy = ["default.target"];
             environment = {
-              DATABASE_URL = databaseURL;
+              DATABASE_URL = project.databaseURL;
             };
             path = with pkgs; [openssl.dev sqlite];
             preStart = ''
