@@ -32,13 +32,13 @@
   scripts = {
     # User scripts
     elm-init.exec = ''
-      mkdir .app
+      mkdir -p .app
       ${pkgs.elmPackages.elm-land}/bin/elm-land init .app
       cat .app/.gitignore >> .gitignore
       rm .app/.gitignore
       mv -n .app/{.*,*} .
       rm -f .app/elm-land.json
-      rmdir .app
+      rm -rf .app
       mkdir static
       touch tailwind.css static/style.css
     '';
