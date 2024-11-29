@@ -116,14 +116,12 @@ async fn create_user(
         deleted_at: None,
     };
 
-    let user_id = &user.id;
-    let user_username = &user.username;
     let created_at_timestamp = user.created_at.timestamp();
 
     if let Err(err) = sqlx::query!(
         "INSERT INTO users(id, username, created_at) VALUES (?, ?, ?)",
-        user_id,
-        user_username,
+        user.id,
+        user.username,
         created_at_timestamp,
     )
     .execute(&pool)
