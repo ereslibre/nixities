@@ -1,3 +1,3 @@
 use std::env;
 
-pub(crate) const GIT_REVISION: &'static str = env!("GIT_REVISION");
+pub(crate) const GIT_REVISION: &str = env!("GIT_REVISION");
