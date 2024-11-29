@@ -116,12 +116,18 @@ async fn create_user(
         deleted_at: None,
     };
 
-    if let Err(err) = sqlx::query("INSERT INTO users(id, username, created_at) VALUES (?, ?, ?)")
-        .bind(&user.id)
-        .bind(&user.username)
-        .bind(user.created_at.timestamp())
-        .execute(&pool)
-        .await
+    let user_id = &user.id;
+    let user_username = &user.username;
+    let created_at_timestamp = user.created_at.timestamp();
+
+    if let Err(err) = sqlx::query!(
+        "INSERT INTO users(id, username, created_at) VALUES (?, ?, ?)",
+        user_id,
+        user_username,
+        created_at_timestamp,
+    )
+    .execute(&pool)
+    .await
     {
         if let Some(database_error) = err.as_database_error() {
             match identify_database_error(database_error) {
