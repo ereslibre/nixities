@@ -187,16 +187,19 @@
 
               enterShell = ''
                 cat <<'EOF' | ${pkgs.bat}/bin/bat --language=markdown
-                  # Welcome to a new webapp!
+                # Welcome to a new webapp!
 
-                  ## Init
+                ## Project initial setup
 
-                  Inspect the backend, and create a frontend --if applies.--
+                This setup only needs to be executed once when creating the project from the template.
 
-                  In order to create a frontend, run:
+                Initialize the backend database by running:
+                  - `pushd backend && just db-setup && popd`
+
+                If you want to create a frontend, run:
                   - `pushd frontend && elm-init && popd`
 
-                  Now, you can start the devenv environment: `devenv up`.
+                Now, you can start the devenv environment: `devenv up`.
                 EOF
               '';
 
