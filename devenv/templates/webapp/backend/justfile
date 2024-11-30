@@ -5,5 +5,9 @@ fmt:
 build profile="":
     cargo build {{profile}}
 
+db-setup:
+    mkdir -p db
+    cargo sqlx database setup
+
 update-sqlx:
     cargo sqlx prepare --workspace
