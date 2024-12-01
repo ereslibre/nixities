@@ -1,15 +1,19 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  pkgs-elm,
+}: {
   env = {
     # `elm-land server` uses this envvar for setting up
     # its listener
     HOST = "0.0.0.0";
   };
 
-  languages.elm.enable = true;
-
   packages =
-    (with pkgs.elmPackages; [
+    (with pkgs-elm.elmPackages; [
+      elm
+      elm-format
       elm-land
+      elm-language-server
       elm-review
       elm-test
     ])
@@ -25,7 +29,7 @@
   };
 
   processes = {
-    frontend.exec = "cd frontend && ${pkgs.elmPackages.elm-land}/bin/elm-land server";
+    frontend.exec = "cd frontend && ${pkgs-elm.elmPackages.elm-land}/bin/elm-land server";
     tailwindcss-watcher.exec = "cd frontend && ${pkgs.tailwindcss}/bin/tailwindcss -c tailwind.config.js -i tailwind.css -o static/style.css --watch=always";
   };
 
@@ -33,7 +37,7 @@
     # User scripts
     elm-init.exec = ''
       mkdir -p .app
-      ${pkgs.elmPackages.elm-land}/bin/elm-land init .app
+      ${pkgs-elm.elmPackages.elm-land}/bin/elm-land init .app
       cat .app/.gitignore >> .gitignore
       rm .app/.gitignore
       mv -n .app/{.*,*} .

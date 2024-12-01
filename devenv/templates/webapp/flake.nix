@@ -2,9 +2,10 @@
   inputs = {
     mkElmDerivation = {
       url = "github:jeslie0/mkElmDerivation";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-elm";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-elm.url = "github:NixOS/nixpkgs/release-24.05";
     systems.url = "github:nix-systems/default";
     devenv = {
       url = "github:cachix/devenv";
@@ -16,6 +17,7 @@
     self,
     mkElmDerivation,
     nixpkgs,
+    nixpkgs-elm,
     devenv,
     systems,
     ...
@@ -103,6 +105,9 @@
 
     packages = forEachSystem (system: let
       pkgs = import nixpkgs {
+        inherit system;
+      };
+      pkgs-elm = import nixpkgs-elm {
         overlays = [mkElmDerivation.overlays.mkElmDerivation];
         inherit system;
       };
@@ -115,7 +120,7 @@
           GIT_REVISION = project.revision;
         };
       };
-      frontend = pkgs.mkElmDerivation {
+      frontend = pkgs-elm.mkElmDerivation {
         name = "${project.name}-frontend";
         src = ./frontend;
         env = {
@@ -173,13 +178,16 @@
       forEachSystem
       (system: let
         pkgs = nixpkgs.legacyPackages.${system};
+        pkgs-elm = import nixpkgs-elm {
+          inherit system;
+        };
       in {
         default = devenv.lib.mkShell {
           inherit inputs pkgs;
 
           modules = [
             {
-              imports = [./backend ./frontend];
+              imports = [./backend (import ./frontend {inherit pkgs pkgs-elm;})];
 
               env = {
                 GIT_REVISION = "devenv";
