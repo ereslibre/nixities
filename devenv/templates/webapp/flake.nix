@@ -127,7 +127,7 @@
           GIT_REVISION = project.revision;
         };
         buildPhase = ''
-          ${pkgs.elmPackages.elm-land}/bin/elm-land build
+          ${pkgs-elm.elmPackages.elm-land}/bin/elm-land build
         '';
         installPhase = ''
           mkdir -p $out
