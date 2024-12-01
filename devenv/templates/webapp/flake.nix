@@ -194,7 +194,7 @@
               };
 
               enterShell = ''
-                cat <<'EOF' | ${pkgs.bat}/bin/bat --language=markdown
+                cat <<'EOF' | ${pkgs.bat}/bin/bat --language=markdown --decorations=never
                 # Welcome to a new webapp!
 
                 ## Project initial setup
