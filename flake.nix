@@ -7,7 +7,11 @@
       url = "github:astro/microvm.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    homelab.url = "github:ereslibre/homelab";
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/nixos-unstable";
+      follows = "homelab/nixpkgs";
+    };
   };
 
   outputs = {
@@ -15,6 +19,7 @@
     flake-utils,
     microvm,
     nixpkgs,
+    ...
   }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {

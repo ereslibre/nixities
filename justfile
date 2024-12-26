@@ -1,5 +1,5 @@
 fmt:
-	find . -name "*.nix" | xargs nix develop --command alejandra
+    find . -name "*.nix" | xargs nix develop --command alejandra
 
 generic-dev:
     nix run .#vms.generic-dev
