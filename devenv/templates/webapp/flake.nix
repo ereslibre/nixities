@@ -193,6 +193,8 @@
                 GIT_REVISION = "devenv";
               };
 
+              process.managers.process-compose.tui.enable = false;
+
               enterShell = ''
                 cat <<'EOF' | ${pkgs.bat}/bin/bat --language=markdown --decorations=never
                 # Welcome to a new webapp!
