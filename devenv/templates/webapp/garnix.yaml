@@ -1,0 +1,4 @@
+builds:
+  exclude:
+    - 'devShells.*.default'
+    - 'packages.*.devenv-up'
