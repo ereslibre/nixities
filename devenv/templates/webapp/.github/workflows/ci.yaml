@@ -14,8 +14,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v14
-      - name: Setup the magic Nix cache
-        uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: Format
         run: |
           nix develop --impure --command just fmt
