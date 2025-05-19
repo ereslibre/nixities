@@ -38,25 +38,6 @@
       databaseURL = "sqlite:///app/db/core.sqlite3";
     };
   in {
-    oci-containers = forEachSystem (system: let
-      pkgs = import nixpkgs {
-        overlays = [mkElmDerivation.overlays.mkElmDerivation];
-        inherit system;
-      };
-    in {
-      backend = pkgs.dockerTools.streamLayeredImage {
-        name = "followdat-link-backend";
-        tag = "0.1";
-        config = {
-          Cmd = ["${self.packages.${system}.backend}/bin/backend"];
-          Env = ["DATABASE_URL=${project.databaseURL}"];
-          ExposedPorts = {
-            "3000/tcp" = {};
-          };
-        };
-      };
-    });
-
     containers = forEachSystem (system: let
       pkgs = import nixpkgs {
         overlays = [mkElmDerivation.overlays.mkElmDerivation];
