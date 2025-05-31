@@ -112,7 +112,8 @@
         '';
         installPhase = ''
           mkdir -p $out
-          cp -rv dist/* $out/
+          cp -rv dist $out/
+          cp wrangler.toml $out/
         '';
       };
       web = pkgs.stdenv.mkDerivation {

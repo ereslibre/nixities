@@ -1,4 +1,5 @@
 mod db;
+mod errors;
 mod version;
 
 use axum::{
@@ -15,22 +16,10 @@ use sqlx::SqlitePool;
 use std::env;
 use tracing::info;
 
-use db::{identify_database_error, DatabaseError};
-
-#[derive(Debug, Serialize)]
-enum BackendError {
-    DatabaseError,
-}
-
-impl IntoResponse for BackendError {
-    fn into_response(self) -> Response {
-        (
-            StatusCode::INTERNAL_SERVER_ERROR,
-            String::from("Something unexpected happened"),
-        )
-            .into_response()
-    }
-}
+use crate::{
+    db::{identify_database_error, DatabaseError},
+    errors::BackendError,
+};
 
 #[tokio::main]
 async fn main() -> Result<(), BackendError> {
@@ -75,12 +64,6 @@ async fn list_users(State(pool): State<SqlitePool>) -> Result<Json<Vec<v1::User>
     }
 
     Ok(Json(result))
-}
-
-impl From<sqlx::Error> for BackendError {
-    fn from(_err: sqlx::Error) -> Self {
-        BackendError::DatabaseError
-    }
 }
 
 #[derive(Serialize)]
