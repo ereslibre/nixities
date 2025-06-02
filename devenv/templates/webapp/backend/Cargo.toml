@@ -3,6 +3,9 @@ name = "backend"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "openapi-spec"
+
 [dependencies]
 anyhow = "1"
 axum = "0.7"
@@ -12,6 +15,6 @@ sqlx = { version = "0.7", features = ["macros", "migrate", "runtime-tokio", "sql
 tokio = { version = "1.0", features = ["full"] }
 tracing = "0.1"
 tracing-subscriber = "0.3"
-utoipa = "5"
+utoipa = { version = "5", features = ["chrono"] }
 utoipa-axum = "0.2"
 uuid = { version = "1", features = ["v4"] }

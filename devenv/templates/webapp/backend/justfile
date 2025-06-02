@@ -11,3 +11,6 @@ db-setup:
 
 update-sqlx:
     cargo sqlx prepare --workspace
+
+openapi-spec:
+    cargo run --bin openapi-spec
