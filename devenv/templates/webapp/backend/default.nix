@@ -19,7 +19,7 @@ in {
   };
 
   processes = {
-    backend.exec = "cd backend && db-setup && cargo run --bin backend";
+    backend.exec = "cd backend && just db-setup && cargo run --bin backend";
   };
 
   scripts = {
