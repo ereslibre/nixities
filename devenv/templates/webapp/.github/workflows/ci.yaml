@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v14
+        uses: DeterminateSystems/nix-installer-action@v17
       - name: Format
         run: |
           nix develop --impure --command just fmt
@@ -25,4 +25,4 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Check Nix flake inputs
-        uses: DeterminateSystems/flake-checker-action@v8
+        uses: DeterminateSystems/flake-checker-action@v10
