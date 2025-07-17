@@ -8,10 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     homelab.url = "github:ereslibre/homelab";
-    nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-unstable";
-      follows = "homelab/nixpkgs";
-    };
+    nixpkgs.follows = "homelab/nixpkgs";
   };
 
   outputs = {
