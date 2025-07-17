@@ -68,6 +68,7 @@
           elm = pkgs.callPackage ./shells/upstream/elm {};
           ghc = pkgs.callPackage ./shells/upstream/ghc {};
           grace = pkgs.callPackage ./shells/upstream/grace {};
+          libkrun = pkgs.callPackage ./shells/upstream/libkrun {};
           rustc = pkgs.callPackage ./shells/upstream/rustc {inherit devGenericTools;};
           servo = pkgs.callPackage ./shells/upstream/servo {inherit devGenericTools;};
           wasi-libc =
