@@ -13,7 +13,7 @@ in {
     sqlx-cli
   ];
 
-  pre-commit = {
+  git-hooks = {
     hooks.rustfmt.enable = true;
     settings.rust.cargoManifestPath = "./backend/Cargo.toml";
   };

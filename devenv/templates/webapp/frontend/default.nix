@@ -22,7 +22,7 @@
       tailwindcss-language-server
     ]);
 
-  pre-commit.hooks = {
+  git-hooks.hooks = {
     elm-format.enable = true;
     elm-review.enable = false;
     elm-test.enable = false;
