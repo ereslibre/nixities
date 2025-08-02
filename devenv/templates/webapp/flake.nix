@@ -197,7 +197,7 @@
 
               packages = with pkgs; [alejandra findutils just];
 
-              pre-commit.hooks.alejandra.enable = true;
+              git-hooks.hooks.alejandra.enable = true;
             }
           ];
         };

@@ -12,7 +12,7 @@
 
   packages = with pkgs; [alejandra just openssl pkg-config];
 
-  pre-commit.hooks = {
+  git-hooks.hooks = {
     rustfmt.enable = true;
     clippy.enable = true;
   };

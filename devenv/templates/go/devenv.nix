@@ -9,5 +9,5 @@
 
   packages = with pkgs; [alejandra just];
 
-  pre-commit.hooks.gofmt.enable = true;
+  git-hooks.hooks.gofmt.enable = true;
 }
