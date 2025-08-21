@@ -1,2 +1,2 @@
-name = "webapp-web"
+name = "www-webapp"
 pages_build_output_dir = "./dist"
