@@ -1,7 +1,0 @@
-fmt:
-    find . -name "*.nix" | xargs alejandra
-    elm-format --yes src
-
-build:
-    elm-land build
-    tailwindcss -i tailwind.css -o static/style.css
