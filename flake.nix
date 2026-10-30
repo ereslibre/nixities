@@ -3,17 +3,19 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
+    homelab.url = "github:ereslibre/homelab";
+    llm-agents.follows = "homelab/llm-agents";
     microvm = {
       url = "github:astro/microvm.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    homelab.url = "github:ereslibre/homelab";
     nixpkgs.follows = "homelab/nixpkgs";
   };
 
   outputs = {
     self,
     flake-utils,
+    llm-agents,
     microvm,
     nixpkgs,
     ...
@@ -44,7 +46,13 @@
           (name: nixosDefinition: nixosDefinition.config.microvm.declaredRunner)
           self.outputs.nixosConfigurations.${system}.vms;
       };
-      legacyPackages = pkgs;
+      # Exposes all of nixpkgs (`nix run .#<package>`) and llm-agents.nix
+      # (`nix run .#llm-agents.<package>`).
+      legacyPackages =
+        pkgs
+        // {
+          llm-agents = llm-agents.packages.${system};
+        };
       devShells = {
         default = self.devShells.${system}.nix;
         languages = {
